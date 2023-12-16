@@ -5,6 +5,9 @@ import me.thens.ezgradle.config.configureAndroidLibrary
 import me.thens.ezgradle.config.configureHilt
 import me.thens.ezgradle.config.configureKapt
 import me.thens.ezgradle.config.configureKotlinAndroid
+import me.thens.ezgradle.lib.platform
+import me.thens.ezgradle.lib.resolveVersions
+import me.thens.ezgradle.misc.loadProperties
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies

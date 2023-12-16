@@ -1,7 +1,7 @@
 package me.thens.ezgradle.config
 
-import me.thens.ezgradle.ext
-import me.thens.ezgradle.kotlin
+import me.thens.ezgradle.misc.ext
+import me.thens.ezgradle.misc.kotlin
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension

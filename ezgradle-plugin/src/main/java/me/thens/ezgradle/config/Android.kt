@@ -3,9 +3,9 @@ package me.thens.ezgradle.config
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
-import me.thens.ezgradle.ext
-import me.thens.ezgradle.extra
-import me.thens.ezgradle.versionNameToCode
+import me.thens.ezgradle.misc.ext
+import me.thens.ezgradle.misc.extra
+import me.thens.ezgradle.misc.versionNameToCode
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
 
@@ -28,6 +28,9 @@ internal fun Project.configureAndroidLibrary() {
     if (plugins.hasPlugin("com.android.library")) {
         ext<LibraryExtension>("android") {
             configureAndroidCommon(this)
+            defaultConfig {
+                consumerProguardFiles("consumer-rules.pro")
+            }
         }
     }
 }
@@ -37,7 +40,7 @@ private fun Project.configureAndroidCommon(android: CommonExtension<*, *, *, *, 
         namespace = extra("PACKAGE_NAME")
         compileSdk = 34
         defaultConfig {
-            minSdk = 15
+            minSdk = 21
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             vectorDrawables {
                 useSupportLibrary = true

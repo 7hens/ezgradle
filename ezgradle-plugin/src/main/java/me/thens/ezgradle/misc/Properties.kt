@@ -1,4 +1,4 @@
-package me.thens.ezgradle
+package me.thens.ezgradle.misc
 
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
