@@ -22,7 +22,7 @@ gradlePlugin {
 }
 
 dependencies {
-    fun plugin(pluginId: String, version: String) = "$pluginId:$pluginId.gradle.plugin:$version"
+    fun plugin(id: String, version: String) = "$id:$id.gradle.plugin:$version"
     fun kotlin(name: String) = "org.jetbrains.kotlin.$name"
 
     val agpVersion = "8.2.0"
