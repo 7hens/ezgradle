@@ -3,7 +3,7 @@ package me.thens.ezgradle.config
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
-import me.thens.ezgradle.misc.ext
+import me.thens.ezgradle.misc.configure
 import me.thens.ezgradle.misc.extra
 import me.thens.ezgradle.misc.versionNameToCode
 import org.gradle.api.Project
@@ -11,7 +11,7 @@ import org.gradle.kotlin.dsl.extra
 
 internal fun Project.configureAndroidApplication() {
     if (plugins.hasPlugin("com.android.application")) {
-        ext<ApplicationExtension>("android") {
+        configure<ApplicationExtension>("android") {
             configureAndroidCommon(this)
             defaultConfig {
                 val version = extra("VERSION")
@@ -26,7 +26,7 @@ internal fun Project.configureAndroidApplication() {
 
 internal fun Project.configureAndroidLibrary() {
     if (plugins.hasPlugin("com.android.library")) {
-        ext<LibraryExtension>("android") {
+        configure<LibraryExtension>("android") {
             configureAndroidCommon(this)
             defaultConfig {
                 consumerProguardFiles("consumer-rules.pro")
@@ -56,7 +56,7 @@ private fun Project.configureAndroidCommon(android: CommonExtension<*, *, *, *, 
 
         buildTypes {
             getByName("release") {
-                isMinifyEnabled = true
+                isMinifyEnabled = false
                 proguardFiles(
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"

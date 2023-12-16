@@ -15,5 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "ezgradle"
 includeBuild("ezgradle-plugin")
-include(":sample-app")
-include(":sample-lib")
+include(":sample-android-app")
+include(":sample-android-lib")
+include(":sample-java-lib")

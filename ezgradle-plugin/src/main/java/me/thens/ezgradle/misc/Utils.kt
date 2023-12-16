@@ -9,9 +9,9 @@ fun versionNameToCode(version: String): Int {
         .map { it.toIntOrNull() ?: 0 }
         .plus(listOf(0, 0, 0))
         .take(3)
-        .fold(0) { acc, i -> acc * 100 + i }
+        .fold(0) { acc, i -> acc * 1000 + i }
 }
 
-fun <T> Project.ext(name: String, fn: T.() -> Unit) {
+fun <T> Project.configure(name: String, fn: T.() -> Unit) {
     extensions.configure(name, fn)
 }

@@ -29,6 +29,7 @@ dependencies {
     implementation(plugin("com.android.application", agpVersion))
     implementation(plugin("com.android.library", agpVersion))
     val kotlinVersion = "1.8.10"
+    implementation(plugin(kotlin("jvm"), kotlinVersion))
     implementation(plugin(kotlin("android"), kotlinVersion))
     implementation(plugin(kotlin("plugin.serialization"), kotlinVersion))
     implementation(plugin(kotlin("plugin.parcelize"), kotlinVersion))
