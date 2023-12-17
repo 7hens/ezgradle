@@ -4,7 +4,6 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import me.thens.ezgradle.misc.configure
-import me.thens.ezgradle.misc.extra
 import me.thens.ezgradle.misc.versionNameToCode
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
@@ -14,10 +13,10 @@ internal fun Project.configureAndroidApplication() {
         configure<ApplicationExtension>("android") {
             configureAndroidCommon(this)
             defaultConfig {
-                val version = extra("VERSION")
+                val version = project.version.toString()
                 applicationId = namespace
                 targetSdk = compileSdk
-                versionCode = extra("VERSION_CODE").toIntOrNull() ?: versionNameToCode(version)
+                versionCode = versionNameToCode(version)
                 versionName = version
             }
         }
@@ -37,7 +36,7 @@ internal fun Project.configureAndroidLibrary() {
 
 private fun Project.configureAndroidCommon(android: CommonExtension<*, *, *, *, *>) {
     android.apply {
-        namespace = extra("PACKAGE_NAME")
+        namespace = "$group.$name".lowercase().replace(Regex("[^a-z_.]"), "_")
         compileSdk = 34
         defaultConfig {
             minSdk = 21

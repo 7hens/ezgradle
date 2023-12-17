@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Ezgradle"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="me.thens.ezgradle.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Ezgradle">

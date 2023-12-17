@@ -12,6 +12,12 @@ fun versionNameToCode(version: String): Int {
         .fold(0) { acc, i -> acc * 1000 + i }
 }
 
+fun String.notBlankElse(fn: () -> String): String {
+    return takeIf { it.isNotBlank() } ?: fn()
+}
+
+fun String.notBlankElse(defaultVal: String) = notBlankElse { defaultVal }
+
 fun <T> Project.configure(name: String, fn: T.() -> Unit) {
     extensions.configure(name, fn)
 }

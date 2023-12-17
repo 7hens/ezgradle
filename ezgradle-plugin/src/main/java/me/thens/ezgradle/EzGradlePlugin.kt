@@ -10,8 +10,8 @@ import me.thens.ezgradle.config.configureMavenPublish
 import me.thens.ezgradle.lib.applyAndroidConstraints
 import me.thens.ezgradle.misc.extra
 import me.thens.ezgradle.misc.isAndroid
-import me.thens.ezgradle.misc.kotlin
 import me.thens.ezgradle.misc.loadProperties
+import me.thens.ezgradle.misc.notBlankElse
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -27,8 +27,8 @@ class EzGradlePlugin : Plugin<Project> {
 //        pluginManager.apply(kotlin("kapt"))
         loadProperties("gradle.properties")
         loadProperties("local.properties")
-        group = extra("PACKAGE_NAME")
-        version = extra("VERSION")
+        group = extra("GROUP").notBlankElse("dev." + rootProject.name)
+        version = extra("VERSION").notBlankElse("1.0.0")
         configureJava()
         configureAndroidApplication()
         configureAndroidLibrary()
