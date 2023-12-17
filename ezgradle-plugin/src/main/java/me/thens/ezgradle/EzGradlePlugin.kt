@@ -24,7 +24,7 @@ class EzGradlePlugin : Plugin<Project> {
     }
 
     private fun Project.configure() {
-        pluginManager.apply(kotlin("kapt"))
+//        pluginManager.apply(kotlin("kapt"))
         loadProperties("gradle.properties")
         loadProperties("local.properties")
         group = extra("PACKAGE_NAME")

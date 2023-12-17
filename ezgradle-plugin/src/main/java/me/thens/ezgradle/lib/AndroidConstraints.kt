@@ -39,7 +39,7 @@ internal fun DependencyHandler.applyAndroidConstraints() {
         implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
         implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
         implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion")
-        kapt("androidx.lifecycle:lifecycle-compiler:$lifecycleVersion")
+//        kapt("androidx.lifecycle:lifecycle-compiler:$lifecycleVersion")
         implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
         implementation("androidx.lifecycle:lifecycle-service:$lifecycleVersion")
         implementation("androidx.lifecycle:lifecycle-process:$lifecycleVersion")
@@ -47,7 +47,8 @@ internal fun DependencyHandler.applyAndroidConstraints() {
         testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycleVersion")
         val roomVersion = "2.6.1"
         implementation("androidx.room:room-runtime:$roomVersion")
-        kapt("androidx.room:room-compiler:$roomVersion")
+        api("androidx.room:room-compiler:$roomVersion")
+//        kapt("androidx.room:room-compiler:$roomVersion")
 //        ksp("androidx.room:room-compiler:$roomVersion")
         implementation("androidx.room:room-rxjava2:$roomVersion")
         implementation("androidx.room:room-rxjava3:$roomVersion")
