@@ -5,3 +5,8 @@ plugins {
 //    id("com.android.library") version "8.2.0" apply false
     id("com.github.7hens.ezgradle")
 }
+
+allprojects {
+    group = "com.github.7hens.ezgradle"
+    version = "-SNAPSHOT"
+}
