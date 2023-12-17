@@ -16,6 +16,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.dependencies
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 class EzGradlePlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -24,6 +25,9 @@ class EzGradlePlugin : Plugin<Project> {
 
     private fun Project.configure() {
 //        pluginManager.apply(kotlin("kapt"))
+        configurations.all {
+            resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+        }
         loadProperties("gradle.properties")
         loadProperties("local.properties")
         group = extra("GROUP", "dev." + rootProject.name.lowercase())
@@ -39,13 +43,6 @@ class EzGradlePlugin : Plugin<Project> {
             dependencies {
                 applyAndroidConstraints()
             }
-            applyFrom(File(rootDir, "gradle/common.gradle.kts"))
-        }
-    }
-
-    private fun Project.applyFrom(file: File) {
-        if (file.isFile) {
-            apply(from = file.path)
         }
     }
 }
