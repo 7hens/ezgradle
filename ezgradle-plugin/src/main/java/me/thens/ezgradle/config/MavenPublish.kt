@@ -28,6 +28,9 @@ private fun Project.configureMavenPublish(component: String, assembleTask: Strin
             repositories { mavenLocal() }
             publications {
                 create<MavenPublication>("my") {
+                    groupId = project.group.toString()
+                    artifactId = project.name
+                    version = project.version.toString()
                     from(components.findByName(component))
                 }
             }
