@@ -4,4 +4,5 @@ before_install:
   - echo "Before install"
 install:
   - echo "Running a custom install command"
+  - chmod +x ./gradlew
   - ./gradlew clean -Pgroup=com.github.7hens.ezgradle -Pversion=$VERSION -xtest -xlint publishToMavenLocal
