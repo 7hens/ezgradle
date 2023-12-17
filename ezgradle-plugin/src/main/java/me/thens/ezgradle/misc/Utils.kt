@@ -19,3 +19,5 @@ fun <T> Project.configure(name: String, fn: T.() -> Unit) {
 val Project.isAndroid: Boolean get() = extensions.findByName("android") != null
 
 val Project.isJava: Boolean get() = extensions.findByName("java") != null
+
+val Project.isRoot: Boolean get() = projectDir == rootDir

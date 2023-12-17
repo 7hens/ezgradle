@@ -4,7 +4,7 @@ Upgrading old Android projects can be painful, especially for multi-module proje
 
 ## Setting up the dependency
 
-**Step 1.** Add jitpack in your root settins.gradle.kts at the end of repositories:
+**Step 1.** Add jitpack in your root settings.gradle.kts at the end of repositories:
 
 ```kotlin
 // settings.gradle.kts
@@ -41,4 +41,7 @@ plugins {
     id("com.android.application")
     id("me.thens.ezgradle")
 }
+// With plugin ezgradle, you don't need to configure the android extension, there is default configuration for you.
+// android {
+// }
 ```

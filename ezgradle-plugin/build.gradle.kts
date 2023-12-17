@@ -1,6 +1,10 @@
 plugins {
     `kotlin-dsl`
+    id("maven-publish")
 }
+
+group = "me.thens.ezgradle"
+version = "-SNAPSHOT"
 
 repositories {
     mavenLocal()
