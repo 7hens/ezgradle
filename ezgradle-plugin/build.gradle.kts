@@ -3,7 +3,7 @@ plugins {
     id("maven-publish")
 }
 
-group = "me.thens.ezgradle"
+group = "com.github.7hens.ezgradle"
 version = "-SNAPSHOT"
 
 repositories {
@@ -21,7 +21,7 @@ gradlePlugin {
                 implementationClass = className
             }
         }
-        register("me.thens.ezgradle", "me.thens.ezgradle.EzGradlePlugin")
+        register("com.github.7hens.ezgradle", "me.thens.ezgradle.EzGradlePlugin")
     }
 }
 
@@ -41,4 +41,10 @@ dependencies {
 //    implementation(kotlin("gradle-plugin"))
     implementation(gradleApi())
     implementation(localGroovy())
+}
+
+afterEvaluate {
+    tasks.getByName("publishToMavenLocal").apply {
+        dependsOn(":assemble")
+    }
 }

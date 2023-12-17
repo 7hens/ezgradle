@@ -10,6 +10,7 @@ import me.thens.ezgradle.config.configureMavenPublish
 import me.thens.ezgradle.lib.applyAndroidConstraints
 import me.thens.ezgradle.misc.extra
 import me.thens.ezgradle.misc.isAndroid
+import me.thens.ezgradle.misc.kotlin
 import me.thens.ezgradle.misc.loadProperties
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -23,6 +24,7 @@ class EzGradlePlugin : Plugin<Project> {
     }
 
     private fun Project.configure() {
+        pluginManager.apply(kotlin("kapt"))
         loadProperties("gradle.properties")
         loadProperties("local.properties")
         group = extra("PACKAGE_NAME")

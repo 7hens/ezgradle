@@ -1,0 +1,1 @@
+rootProject.name = "com.github.7hens.ezgradle.gradle.plugin"

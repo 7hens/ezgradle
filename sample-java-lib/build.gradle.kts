@@ -2,5 +2,5 @@ plugins {
     id("java-library")
     kotlin("jvm")
 //    id("maven-publish")
-    id("me.thens.ezgradle")
+    id("com.github.7hens.ezgradle")
 }

@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("me.thens.ezgradle")
+    id("com.github.7hens.ezgradle")
 }
 
 dependencies {
