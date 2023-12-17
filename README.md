@@ -1,5 +1,7 @@
 # EzGradle
 
+[![](https://jitpack.io/v/7hens/ezgradle.svg)](https://jitpack.io/#7hens/ezgradle)
+
 Upgrading old Android projects can be painful, especially for multi-module projects. And ezgradle is the solution.
 
 ## Setting up the dependency
