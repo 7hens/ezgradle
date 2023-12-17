@@ -13,9 +13,19 @@ fun Project.loadProperties(path: String) {
     properties.forEach { key, value -> extra[key.toString()] = value }
 }
 
-fun Project.extra(name: String): String {
+fun Project.extra(name: String, defaultVal: Any = ""): String {
     if (extra.has(name)) {
         return extra[name].toString()
     }
-    return ""
+    return defaultVal.toString()
 }
+
+fun <T> Project.configure(name: String, fn: T.() -> Unit) {
+    extensions.configure(name, fn)
+}
+
+val Project.isAndroid: Boolean get() = extensions.findByName("android") != null
+
+val Project.isJava: Boolean get() = extensions.findByName("java") != null
+
+val Project.isRoot: Boolean get() = projectDir == rootDir

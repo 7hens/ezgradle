@@ -4,7 +4,9 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import me.thens.ezgradle.misc.configure
-import me.thens.ezgradle.misc.versionNameToCode
+import me.thens.ezgradle.misc.extra
+import me.thens.ezgradle.misc.toPackageName
+import me.thens.ezgradle.misc.toVersionCode
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
 
@@ -16,7 +18,7 @@ internal fun Project.configureAndroidApplication() {
                 val version = project.version.toString()
                 applicationId = namespace
                 targetSdk = compileSdk
-                versionCode = versionNameToCode(version)
+                versionCode = version.toVersionCode()
                 versionName = version
             }
         }
@@ -36,7 +38,7 @@ internal fun Project.configureAndroidLibrary() {
 
 private fun Project.configureAndroidCommon(android: CommonExtension<*, *, *, *, *>) {
     android.apply {
-        namespace = "$group.$name".lowercase().replace(Regex("[^a-z_.]"), "_")
+        namespace = (extra("NAMESPACE", project.group) + ".$name").toPackageName()
         compileSdk = 34
         defaultConfig {
             minSdk = 21
@@ -46,7 +48,7 @@ private fun Project.configureAndroidCommon(android: CommonExtension<*, *, *, *, 
             }
 
             extra.properties.entries
-                .filter { it.key.matches(Regex("[A-Z_]+")) }
+                .filter { it.key.matches(Regex("[0-9A-Z_]+")) }
                 .forEach { (key, value) ->
                     buildConfigField("String", key, "\"$value\"")
                     manifestPlaceholders[key] = value
