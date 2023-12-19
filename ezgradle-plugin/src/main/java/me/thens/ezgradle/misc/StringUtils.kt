@@ -7,7 +7,7 @@ fun String.toVersionCode(): Int {
         .replace(Regex("[^0-9.]"), "")
         .split(".")
         .map { it.toIntOrNull() ?: 0 }
-        .plus(listOf(0, 0, 0))
+        .plus(listOf(1, 0, 0))
         .take(3)
         .fold(0) { acc, i -> acc * 1000 + i }
 }

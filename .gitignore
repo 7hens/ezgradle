@@ -2,6 +2,7 @@
 .idea/
 build/
 captures/
+*.log
 *.iml
 .DS_Store
 .externalNativeBuild

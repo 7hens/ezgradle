@@ -10,33 +10,52 @@ import me.thens.ezgradle.misc.toVersionCode
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.extra
 
-internal fun Project.configureAndroidApplication() {
+typealias AndroidCommonExtension = CommonExtension<*, *, *, *, *>
+
+internal fun Project.androidCommon(block: AndroidCommonExtension.() -> Unit) {
+    androidLibrary {
+        androidCommon(block)
+    }
+    androidApplication {
+        androidCommon(block)
+    }
+}
+
+internal fun Project.androidLibrary(block: LibraryExtension.() -> Unit) {
+    if (plugins.hasPlugin("com.android.library")) {
+        configure("android", block)
+    }
+}
+
+internal fun Project.androidApplication(block: ApplicationExtension.() -> Unit) {
     if (plugins.hasPlugin("com.android.application")) {
-        configure<ApplicationExtension>("android") {
-            configureAndroidCommon(this)
-            defaultConfig {
-                val version = project.version.toString()
-                applicationId = namespace
-                targetSdk = compileSdk
-                versionCode = version.toVersionCode()
-                versionName = version
-            }
+        configure("android", block)
+    }
+}
+
+internal fun Project.configureAndroidApplication() {
+    androidApplication {
+        configureAndroidCommon(this)
+        defaultConfig {
+            val version = project.version.toString()
+            applicationId = namespace
+            targetSdk = compileSdk
+            versionCode = version.toVersionCode()
+            versionName = version
         }
     }
 }
 
 internal fun Project.configureAndroidLibrary() {
-    if (plugins.hasPlugin("com.android.library")) {
-        configure<LibraryExtension>("android") {
-            configureAndroidCommon(this)
-            defaultConfig {
-                consumerProguardFiles("consumer-rules.pro")
-            }
+    androidLibrary {
+        configureAndroidCommon(this)
+        defaultConfig {
+            consumerProguardFiles("consumer-rules.pro")
         }
     }
 }
 
-private fun Project.configureAndroidCommon(android: CommonExtension<*, *, *, *, *>) {
+private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
     android.apply {
         namespace = (extra("NAMESPACE", project.group) + ".$name").toPackageName()
         compileSdk = 34
@@ -69,7 +88,7 @@ private fun Project.configureAndroidCommon(android: CommonExtension<*, *, *, *, 
             buildConfig = true
         }
         composeOptions {
-            kotlinCompilerExtensionVersion = "1.4.3"
+            kotlinCompilerExtensionVersion = "1.5.4"
         }
         packaging {
             resources {

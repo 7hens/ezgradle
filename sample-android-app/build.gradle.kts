@@ -4,6 +4,10 @@ plugins {
     id("com.github.7hens.ezgradle")
 }
 
+android {
+
+}
+
 dependencies {
     builtInLibs {
         compose()

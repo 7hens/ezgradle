@@ -3,6 +3,7 @@ package me.thens.ezgradle.config
 import me.thens.ezgradle.misc.configure
 import me.thens.ezgradle.misc.isAndroid
 import me.thens.ezgradle.misc.isJava
+import me.thens.ezgradle.misc.isJavaPlatform
 import me.thens.ezgradle.misc.isRoot
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
@@ -11,18 +12,19 @@ import org.gradle.kotlin.dsl.create
 
 internal fun Project.configureMavenPublish() {
     if (plugins.hasPlugin("maven-publish")) {
-        if (isAndroid) {
-            configureMavenPublish("release", "assembleRelease")
-        } else if (isJava) {
-            configureMavenPublish("java", "assemble")
+        when {
+            isAndroid -> configureMavenPublish("assembleRelease", "release")
+            isJavaPlatform -> configureMavenPublish("assemble", "javaPlatform")
+            isJava -> configureMavenPublish("assemble", "java")
+            else -> Unit
         }
     }
-    if (isRoot) {
-        configureMavenPublishInRoot()
-    }
+//    if (isRoot) {
+//        configureMavenPublishInRoot()
+//    }
 }
 
-private fun Project.configureMavenPublish(component: String, assembleTask: String) {
+private fun Project.configureMavenPublish(assembleTask: String, component: String) {
     afterEvaluate {
         configure<PublishingExtension>("publishing") {
             repositories { mavenLocal() }
