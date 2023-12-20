@@ -14,4 +14,7 @@ allprojects {
     group = "com.github.7hens.ezgradle"
     version = properties["VERSION"] ?: "-SNAPSHOT"
     logger.info("Project {}, {}", name, version)
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+    }
 }

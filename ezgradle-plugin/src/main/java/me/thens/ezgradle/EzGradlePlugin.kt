@@ -8,7 +8,6 @@ import me.thens.ezgradle.config.configureJavaPlatform
 import me.thens.ezgradle.config.configureKapt
 import me.thens.ezgradle.config.configureKotlin
 import me.thens.ezgradle.config.configureMavenPublish
-import me.thens.ezgradle.lib.api
 import me.thens.ezgradle.misc.extra
 import me.thens.ezgradle.misc.generateBuildConfig
 import me.thens.ezgradle.misc.loadProperties
@@ -43,8 +42,10 @@ class EzGradlePlugin : Plugin<Project> {
         val ezGradleGroup = ProjectBuildConfig.GROUP
         val ezGradleVersion = ProjectBuildConfig.VERSION
         dependencies {
-            configurations.findByName("api")?.let {
-                api(platform("$ezGradleGroup:ezgradle-bom:$ezGradleVersion"))
+            platform("$ezGradleGroup:ezgradle-bom:$ezGradleVersion").let { platform ->
+                listOf("implementation", "androidTestImplementation")
+                    .filter { configurations.findByName(it) != null }
+                    .forEach { add(it, platform) }
             }
         }
         afterEvaluate {
