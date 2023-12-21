@@ -6,28 +6,12 @@ Upgrading old Android projects can be painful, especially for multi-module proje
 
 ## Setting up the dependency
 
-**Step 1.** Add jitpack in your root settings.gradle.kts at the end of repositories:
-
-```kotlin
-// settings.gradle.kts
-pluginManagement {
-    repositories {
-        maven("https://jitpack.io")
-    }
-}
-dependencyResolutionManagement {
-    repositories {
-        maven("https://jitpack.io")
-    }
-}
-```
-
-**Step 2.** Add the dependency in your root build.gradle.kts.
+**Step 1.** Add the dependency in your root build.gradle.kts.
 
 ```kotlin
 // build.gradle.kts
 plugins {
-    id("com.github.7hens.ezgradle") version "2023.12.01" apply false
+    id("com.github.7hens.ezgradle") version "2023.12.02" apply false
     // You don't need to add the commented plugins below, because ezgradle has already add them.
 //    id("com.android.application") version "8.2.0" apply false
 //    id("org.jetbrains.kotlin.android") version "1.8.10" apply false
@@ -35,7 +19,7 @@ plugins {
 }
 ```
 
-**Step 3.** Add the dependency in you module build.gradle.kts.
+**Step 2.** Add the dependency in you module build.gradle.kts.
 
 ```kotlin
 // build.gradle.kts
