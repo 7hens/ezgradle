@@ -23,6 +23,7 @@ gradlePlugin {
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            version = project.version.toString()
             from(components.getByName("java"))
         }
     }
