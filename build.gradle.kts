@@ -10,11 +10,12 @@ plugins {
     }
 }
 
-println("VERSION: ${properties["VERSION"]}")
+val projectVersion = properties["version"] ?: properties["VERSION"] ?: "-SNAPSHOT"
+println("VERSION: $projectVersion")
 
 allprojects {
     group = "com.github.7hens.ezgradle"
-    version = properties["VERSION"] ?: "-SNAPSHOT"
+    version = projectVersion
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
     }

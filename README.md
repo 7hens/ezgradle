@@ -6,7 +6,23 @@ Upgrading old Android projects can be painful, especially for multi-module proje
 
 ## Setting up the dependency
 
-**Step 1.** Add the dependency in your root build.gradle.kts.
+**Step 1.** Add jitpack in your root settings.gradle.kts at the end of repositories:
+
+```kotlin
+// settings.gradle.kts
+pluginManagement {
+    repositories {
+        maven("https://jitpack.io")
+    }
+}
+dependencyResolutionManagement {
+    repositories {
+        maven("https://jitpack.io")
+    }
+}
+```
+
+**Step 2.** Add the dependency in your root build.gradle.kts.
 
 ```kotlin
 // build.gradle.kts
@@ -19,7 +35,7 @@ plugins {
 }
 ```
 
-**Step 2.** Add the dependency in you module build.gradle.kts.
+**Step 3.** Add the dependency in you module build.gradle.kts.
 
 ```kotlin
 // build.gradle.kts
