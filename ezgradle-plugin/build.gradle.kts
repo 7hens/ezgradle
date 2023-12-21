@@ -11,14 +11,20 @@ sourceSets {
 }
 
 gradlePlugin {
+    isAutomatedPublishing = false
     plugins {
-        fun register(pluginId: String, className: String) {
-            register(pluginId) {
-                id = pluginId
-                implementationClass = className
-            }
+        register("ezgradle") {
+            id = "com.github.7hens.ezgradle"
+            implementationClass = "me.thens.ezgradle.EzGradlePlugin"
         }
-        register("com.github.7hens.ezgradle", "me.thens.ezgradle.EzGradlePlugin")
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components.getByName("java"))
+        }
     }
 }
 
