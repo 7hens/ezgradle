@@ -10,6 +10,15 @@ sourceSets {
     }
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("pluginMaven") {
+            version = project.version.toString()
+            from(components.getByName("java"))
+        }
+    }
+}
+
 gradlePlugin {
     isAutomatedPublishing = false
     plugins {
@@ -20,31 +29,19 @@ gradlePlugin {
     }
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            version = project.version.toString()
-            from(components.getByName("java"))
-        }
-    }
-}
-
 dependencies {
-    implementation(platform(project(":ezgradle-bom")))
     fun plugin(id: String, version: String) = "$id:$id.gradle.plugin:$version"
     fun plugin(id: String) = "$id:$id.gradle.plugin"
     fun kotlin(name: String) = "org.jetbrains.kotlin.$name"
 
-    val agpVersion = "8.2.0"
+    implementation(platform(project(":ezgradle-bom")))
     implementation(plugin("com.android.application"))
     implementation(plugin("com.android.library"))
-    val kotlinVersion = "1.8.10"
     implementation(plugin(kotlin("jvm")))
     implementation(plugin(kotlin("android")))
     implementation(plugin(kotlin("plugin.serialization")))
     implementation(plugin(kotlin("plugin.parcelize")))
     implementation(plugin("com.google.dagger.hilt.android"))
-//    implementation(kotlin("gradle-plugin"))
     implementation(gradleApi())
     implementation(localGroovy())
 }
