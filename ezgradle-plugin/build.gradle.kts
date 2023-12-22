@@ -30,7 +30,6 @@ gradlePlugin {
 }
 
 dependencies {
-    fun plugin(id: String, version: String) = "$id:$id.gradle.plugin:$version"
     fun plugin(id: String) = "$id:$id.gradle.plugin"
     fun kotlin(name: String) = "org.jetbrains.kotlin.$name"
 
