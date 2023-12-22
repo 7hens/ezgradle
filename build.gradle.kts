@@ -10,8 +10,12 @@ plugins {
     }
 }
 
-val projectVersion = properties["version"] ?: properties["VERSION"] ?: "-SNAPSHOT"
-println("VERSION: $projectVersion")
+fun getProperty(name: String): String? {
+    return if (hasProperty(name)) properties[name].toString() else null
+}
+
+val projectVersion = getProperty("version") ?: "-SNAPSHOT"
+println("#VERSION: $projectVersion")
 
 allprojects {
     group = "com.github.7hens.ezgradle"
