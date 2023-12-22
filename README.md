@@ -35,6 +35,8 @@ plugins {
 }
 ```
 
+The latest version is [![](https://jitpack.io/v/7hens/ezgradle.svg)](https://jitpack.io/#7hens/ezgradle)
+
 **Step 3.** Add the dependency in you module build.gradle.kts.
 
 ```kotlin
