@@ -14,7 +14,7 @@ fun getProperty(name: String): String? {
     return if (hasProperty(name)) properties[name].toString() else null
 }
 
-val projectVersion = getProperty("version") ?: "-SNAPSHOT"
+val projectVersion = getProperty("VERSION") ?: "-SNAPSHOT"
 println("#VERSION: $projectVersion")
 
 allprojects {

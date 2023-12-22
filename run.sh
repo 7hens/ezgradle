@@ -14,14 +14,14 @@ test() {
   echo
   echo "# Run task :publishToMavenLocal"
   EXCLUDES_SAMPLES=true ./gradlew clean projects \
-    -Pversion=-SNAPSHOT -xtest assemble publishToMavenLocal --stacktrace
+    -PVERSION=-SNAPSHOT -xtest assemble publishToMavenLocal --stacktrace
   echo "\$ ls $group.gradle.plugin"
   ls "$groupDir/$group.gradle.plugin"
   echo "\$ ls ezgradle-bom"
   ls "$groupDir/ezgradle-bom"
   echo
   echo "# Assemble samples"
-  ./gradlew projects assemble -Pversion=-SNAPSHOT --stacktrace
+  ./gradlew projects assemble -PVERSION=-SNAPSHOT --stacktrace
 }
 
 main "$@"
