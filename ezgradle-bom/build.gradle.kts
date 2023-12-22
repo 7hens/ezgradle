@@ -16,9 +16,11 @@ dependencies {
     api(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
     api(platform("io.coil-kt:coil-bom:2.5.0"))
     api(platform("io.github.jan-tennert.supabase:bom:1.4.7"))
+    api(platform("io.insert-koin:koin-bom:3.5.3"))
     api(platform("org.junit:junit-bom:5.10.1"))
     api(platform("org.mockito:mockito-bom:5.8.0"))
     api(platform("org.jetbrains.kotlin:kotlin-bom:$kotlinVersion"))
+    api(platform("org.ow2.asm:asm-bom:9.6"))
     constraints {
         fun plugin(id: String, version: String) = "$id:$id.gradle.plugin:$version"
         fun kotlin(name: String) = "org.jetbrains.kotlin.$name"
@@ -143,6 +145,15 @@ dependencies {
         api("androidx.work:work-gcm:$workVersion")
         api("androidx.work:work-testing:$workVersion")
         api("androidx.work:work-multiprocess:$workVersion")
+        val acraVersion = "5.11.3"
+        api("ch.acra:acra-advanced-scheduler:$acraVersion")
+        api("ch.acra:acra-core:$acraVersion")
+        api("ch.acra:acra-dialog:$acraVersion")
+        api("ch.acra:acra-http:$acraVersion")
+        api("ch.acra:acra-limiter:$acraVersion")
+        api("ch.acra:acra-mail:$acraVersion")
+        api("ch.acra:acra-notification:$acraVersion")
+        api("ch.acra:acra-toast:$acraVersion")
         api("com.airbnb.android:lottie:6.2.0")
         api("com.github.bumptech.glide:glide:4.16.0")
         api("com.github.PhilJay:MPAndroidChart:v3.1.0")
@@ -183,15 +194,20 @@ dependencies {
         api("junit:junit:4.13.2")
         api("org-apache.commons:commons-lang3:3.14.0")
         api("org-apache.commons:commons-collections4:4.4")
-        val aspectjVersion = "3.24.2"
-        api("org.aspectj:aspect-core:$aspectjVersion")
+        api("org.aspectj:aspect-core:3.24.2")
+        api("org.javassist:javassist:3.30.1-GA")
         api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+        api("org.jooq:jool:0.9.15")
+        api("org.jooq:joor:0.9.15")
+        api("org.jooq:joor-java-8:0.9.15")
+        api("org.jsoup:jsoup:1.17.1")
     }
 }
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            version = project.version.toString()
             from(components.getByName("javaPlatform"))
         }
     }

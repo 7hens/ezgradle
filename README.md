@@ -27,13 +27,15 @@ dependencyResolutionManagement {
 ```kotlin
 // build.gradle.kts
 plugins {
-    id("com.github.7hens.ezgradle") version "2023.12.01" apply false
+    id("com.github.7hens.ezgradle") version "2023.12.02" apply false
     // You don't need to add the commented plugins below, because ezgradle has already add them.
 //    id("com.android.application") version "8.2.0" apply false
 //    id("org.jetbrains.kotlin.android") version "1.8.10" apply false
 //    id("com.android.library") version "8.2.0" apply false
 }
 ```
+
+The latest version is [![](https://jitpack.io/v/7hens/ezgradle.svg)](https://jitpack.io/#7hens/ezgradle)
 
 **Step 3.** Add the dependency in you module build.gradle.kts.
 
