@@ -6,6 +6,7 @@ main() {
 }
 
 test() {
+  clear
   local group=com.github.7hens.ezgradle
   local groupDir=~/.m2/repository/${group//.//}
   rm -rf ~/.gradle/caches/modules-2/files-2.1/$group*

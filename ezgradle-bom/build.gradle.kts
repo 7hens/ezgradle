@@ -8,8 +8,8 @@ javaPlatform {
 }
 
 dependencies {
-    val kotlinVersion = "1.8.10"
-    val agpVersion = "8.2.0"
+    val kotlinVersion = System.getProperty("KOTLIN_VERSION")
+    val agpVersion = System.getProperty("AGP_VERSION")
     api(platform("androidx.compose:compose-bom:2023.10.01"))
     api(platform("com.fasterxml.jackson:jackson-bom:2.16.0"))
     api(platform("com.google.firebase:firebase-bom:32.7.0"))
