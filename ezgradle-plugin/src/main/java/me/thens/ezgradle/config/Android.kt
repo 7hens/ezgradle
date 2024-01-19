@@ -85,7 +85,7 @@ private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
             }
         }
         buildFeatures {
-            compose = true
+            compose = false
             buildConfig = true
         }
         composeOptions {

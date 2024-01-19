@@ -29,7 +29,7 @@ class EzGradlePlugin : Plugin<Project> {
         }
         loadProperties("gradle.properties")
         loadProperties("local.properties")
-        group = extra("GROUP", "dev." + rootProject.name.lowercase())
+        group = extra("GROUP", rootProject.name.lowercase())
         version = extra("VERSION", "1.0.0")
         configureAndroidApplication()
         configureAndroidLibrary()
@@ -43,7 +43,7 @@ class EzGradlePlugin : Plugin<Project> {
         val ezGradleVersion = ProjectBuildConfig.VERSION
         dependencies {
             platform("$ezGradleGroup:ezgradle-bom:$ezGradleVersion").let { platform ->
-                listOf("implementation", "androidTestImplementation")
+                listOf("implementation", "androidTestImplementation", "kapt", "annotationProcessor")
                     .filter { configurations.findByName(it) != null }
                     .forEach { add(it, platform) }
             }
