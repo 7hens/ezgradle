@@ -9,6 +9,7 @@ class BuiltInLibs(dependencies: DependencyHandler): DependencyHandler by depende
         implementation("androidx.compose.ui:ui")
         implementation("androidx.compose.ui:ui-graphics")
         implementation("androidx.compose.ui:ui-tooling-preview")
+        implementation("androidx.compose.material:material")
         implementation("androidx.compose.material3:material3")
         androidTestImplementation("androidx.compose.ui:ui-test-junit4")
         debugImplementation("androidx.compose.ui:ui-tooling")
@@ -17,7 +18,9 @@ class BuiltInLibs(dependencies: DependencyHandler): DependencyHandler by depende
 
     fun hilt() {
         implementation("com.google.dagger:hilt-android")
-        kapt("com.google.dagger:hilt-compiler")
+//        kapt("com.google.dagger:hilt-compiler")
+        kapt("com.google.dagger:hilt-android-compiler")
+        kapt("androidx.hilt:hilt-compiler")
 //    implementation("androidx.hilt:hilt-navigation-compose")
     }
 

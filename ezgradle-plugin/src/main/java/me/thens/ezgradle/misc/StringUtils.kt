@@ -15,5 +15,5 @@ fun String.toVersionCode(): Int {
 fun String.toPackageName(): String {
     return lowercase()
         .replace(Regex("[^0-9a-z_.]"), "_")
-        .replace(Regex("\\b\\d"), "_\$0")
+        .replace(Regex("\\b[0-9_]"), "a\$0")
 }
