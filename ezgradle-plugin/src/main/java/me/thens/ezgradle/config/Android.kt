@@ -3,9 +3,8 @@ package me.thens.ezgradle.config
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
-import me.thens.ezgradle.ProjectBuildConfig
+import me.thens.ezgradle.ProjectConfig
 import me.thens.ezgradle.misc.configure
-import me.thens.ezgradle.misc.extra
 import me.thens.ezgradle.misc.toPackageName
 import me.thens.ezgradle.misc.toVersionCode
 import org.gradle.api.Project
@@ -58,7 +57,7 @@ internal fun Project.configureAndroidLibrary() {
 
 private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
     android.apply {
-        namespace = (extra("NAMESPACE", project.group) + ".$name").toPackageName()
+        namespace = "${project.group}.${project.name}".toPackageName()
         compileSdk = 34
         defaultConfig {
             minSdk = 21
@@ -67,8 +66,10 @@ private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
                 useSupportLibrary = true
             }
 
+            val propPrefix = "project."
             extra.properties.entries
-                .filter { it.key.matches(Regex("[0-9A-Z_]+")) }
+                .filter { it.key.startsWith(propPrefix) }
+                .map { it.key.substringAfter(propPrefix).uppercase() to it.value }
                 .forEach { (key, value) ->
                     buildConfigField("String", key, "\"$value\"")
                     manifestPlaceholders[key] = value
@@ -89,7 +90,7 @@ private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
             buildConfig = true
         }
         composeOptions {
-            kotlinCompilerExtensionVersion = ProjectBuildConfig.COMPOSE_COMPILER_VERSION
+            kotlinCompilerExtensionVersion = ProjectConfig.COMPOSE_COMPILER_VERSION
         }
         packaging {
             resources {

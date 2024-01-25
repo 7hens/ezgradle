@@ -8,8 +8,8 @@ javaPlatform {
 }
 
 dependencies {
-    val kotlinVersion = System.getProperty("KOTLIN_VERSION")
-    val agpVersion = System.getProperty("AGP_VERSION")
+    val kotlinVersion = System.getProperty("kotlin_version")
+    val agpVersion = System.getProperty("agp_version")
     api(platform("androidx.compose:compose-bom:2023.10.01"))
     api(platform("com.fasterxml.jackson:jackson-bom:2.16.0"))
     api(platform("com.google.firebase:firebase-bom:32.7.0"))
@@ -75,6 +75,8 @@ dependencies {
         api("androidx.exifinterface:exifinterface:1.3.7")
         api("androidx.heifwriter:heifwriter:1.1.0-alpha02")
         api("androidx.hilt:hilt-navigation-compose:1.1.0")
+        api("androidx.hilt:hilt-work:1.1.0")
+        api("androidx.hilt:hilt-compiler:1.1.0")
         val lifecycleVersion = "2.6.2"
         api("androidx.lifecycle:lifecycle-compiler:$lifecycleVersion")
         api("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
@@ -157,7 +159,7 @@ dependencies {
         api("com.airbnb.android:lottie:6.2.0")
         api("com.github.bumptech.glide:glide:4.16.0")
         api("com.github.PhilJay:MPAndroidChart:v3.1.0")
-        val accompanistVersion = "0.33.0-alpha"
+        val accompanistVersion = "0.32.0"
         api("com.google.accompanist:accompanist-drawablepainter:$accompanistVersion")
         api("com.google.accompanist:accompanist-permissions:$accompanistVersion")
         api("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")

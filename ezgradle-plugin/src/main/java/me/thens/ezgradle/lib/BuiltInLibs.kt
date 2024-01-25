@@ -18,7 +18,9 @@ class BuiltInLibs(dependencies: DependencyHandler): DependencyHandler by depende
 
     fun hilt() {
         implementation("com.google.dagger:hilt-android")
-        kapt("com.google.dagger:hilt-compiler")
+//        kapt("com.google.dagger:hilt-compiler")
+        kapt("com.google.dagger:hilt-android-compiler")
+        kapt("androidx.hilt:hilt-compiler")
 //    implementation("androidx.hilt:hilt-navigation-compose")
     }
 

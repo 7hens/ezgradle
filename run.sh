@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 main() {
+  set -e
   uname -a
-  test
+  test_assemble
 }
 
-test() {
+test_assemble() {
   clear
   local group=com.github.7hens.ezgradle
   local groupDir=~/.m2/repository/${group//.//}
@@ -15,14 +16,15 @@ test() {
   echo
   echo "# Run task :publishToMavenLocal"
   EXCLUDES_SAMPLES=true ./gradlew clean projects \
-    -PVERSION=-SNAPSHOT -xtest assemble publishToMavenLocal --stacktrace
+    -Pversion=-SNAPSHOT -xtest assemble publishToMavenLocal --stacktrace
   echo "\$ ls $group.gradle.plugin"
   ls "$groupDir/$group.gradle.plugin"
   echo "\$ ls ezgradle-bom"
   ls "$groupDir/ezgradle-bom"
   echo
   echo "# Assemble samples"
-  ./gradlew projects assemble -PVERSION=-SNAPSHOT --stacktrace
+  ./gradlew projects assemble -Pversion=-SNAPSHOT
+  printf "Elapsed Time: %dm %ds\n" $[$SECONDS / 60] $[$SECONDS % 60]
 }
 
 main "$@"
