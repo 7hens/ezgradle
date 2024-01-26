@@ -8,8 +8,8 @@ import me.thens.ezgradle.config.configureJavaPlatform
 import me.thens.ezgradle.config.configureKapt
 import me.thens.ezgradle.config.configureKotlin
 import me.thens.ezgradle.config.configureMavenPublish
-import me.thens.ezgradle.misc.generateProjectConfig
-import me.thens.ezgradle.misc.loadProperties
+import me.thens.ezgradle.misc.generateBuildConfig
+import me.thens.ezgradle.misc.isJava
 import me.thens.ezgradle.misc.toPackageName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -26,8 +26,6 @@ class EzGradlePlugin : Plugin<Project> {
         configurations.all {
             resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
         }
-        loadProperties("gradle.properties")
-        loadProperties("local.properties")
         configureAndroidApplication()
         configureAndroidLibrary()
         configureHilt()
@@ -36,8 +34,8 @@ class EzGradlePlugin : Plugin<Project> {
         configureKotlin()
         configureKapt()
         configureMavenPublish()
-        val ezGradleGroup = ProjectConfig.GROUP
-        val ezGradleVersion = ProjectConfig.VERSION
+        val ezGradleGroup = BuildConfig.GROUP
+        val ezGradleVersion = BuildConfig.VERSION
         dependencies {
             platform("$ezGradleGroup:ezgradle-bom:$ezGradleVersion").let { platform ->
                 listOf("implementation", "androidTestImplementation", "kapt", "annotationProcessor")
@@ -49,8 +47,10 @@ class EzGradlePlugin : Plugin<Project> {
             tasks.filter { it.name.startsWith("compile") && it.name.endsWith("Kotlin") }
                 .forEach {
                     it.doFirst {
-                        val packageName = "${project.group}.${projectDir.name}"
-                        generateProjectConfig(packageName.toPackageName())
+                        if (isJava) {
+                            val packageName = "${project.group}.${projectDir.name}"
+                            generateBuildConfig(packageName.toPackageName())
+                        }
                     }
                 }
         }

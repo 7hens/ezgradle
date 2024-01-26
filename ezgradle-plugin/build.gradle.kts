@@ -66,8 +66,8 @@ private fun Project.getConfigProps(): Map<Any, Any> {
     }
 }
 
-fun Project.generateProjectConfig(packageName: String) {
-    val className = "ProjectConfig"
+fun Project.generateBuildConfig(packageName: String) {
+    val className = "BuildConfig"
     val packageDir = packageName.replace('.', '/')
     val outputDir = layout.buildDirectory.file("generated/src/main/kotlin/").get().asFile
     val outputFile = File(outputDir, "$packageDir/$className.kt")
@@ -88,7 +88,7 @@ fun Project.generateProjectConfig(packageName: String) {
 afterEvaluate {
     tasks.getByName("compileKotlin") {
         doFirst {
-            generateProjectConfig("me.thens.ezgradle")
+            generateBuildConfig("me.thens.ezgradle")
         }
     }
 //    tasks.getByName("publishToMavenLocal").apply {

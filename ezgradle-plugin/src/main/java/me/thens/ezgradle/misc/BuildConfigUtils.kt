@@ -1,6 +1,7 @@
 package me.thens.ezgradle.misc
 
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.extra
 import java.io.File
 import java.util.Properties
 
@@ -8,7 +9,10 @@ private fun File.isUpToDate(inputFiles: List<File>): Boolean {
     return exists() && inputFiles.all { it.lastModified() < lastModified() }
 }
 
-private fun Project.getConfigProps(): Map<Any, Any> {
+val Project.buildConfigProps
+    get() = extra.getOrPut("ezgradle.buildConfig") { initBuildConfig() }
+
+private fun Project.initBuildConfig(): Map<String, Any> {
     val gradleKeys = Properties().run {
         rootProject.file("gradle.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
         keys
@@ -17,7 +21,7 @@ private fun Project.getConfigProps(): Map<Any, Any> {
         properties.forEach { (k, v) -> k.takeIf { it in gradleKeys }?.let { put(k, v ?: "") } }
         rootProject.file("local.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
     }
-    return mutableMapOf<Any, Any>().apply {
+    return mutableMapOf<String, Any>().apply {
         myProps.forEach { (key, value) ->
             key.toString().takeIf { it.matches(Regex("[A-Z_]+")) }?.let { put(it, value ?: "") }
         }
@@ -27,8 +31,8 @@ private fun Project.getConfigProps(): Map<Any, Any> {
     }
 }
 
-fun Project.generateProjectConfig(packageName: String) {
-    val className = "ProjectConfig"
+fun Project.generateBuildConfig(packageName: String) {
+    val className = "BuildConfig"
     val packageDir = packageName.replace('.', '/')
     val outputDir = layout.buildDirectory.file("generated/src/main/kotlin/").get().asFile
     val outputFile = File(outputDir, "$packageDir/$className.kt")
@@ -37,7 +41,7 @@ fun Project.generateProjectConfig(packageName: String) {
         .filter { it.isFile }
     if (!outputFile.isUpToDate(inputFiles)) {
         outputFile.parentFile?.mkdirs()
-        val fields = getConfigProps().entries
+        val fields = buildConfigProps.entries
             .joinToString("\n   ") { "val ${it.key} = \"${it.value}\"" }
         outputFile.writeText(
             """
