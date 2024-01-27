@@ -6,6 +6,7 @@ import com.android.build.api.dsl.LibraryExtension
 import me.thens.ezgradle.BuildConfig
 import me.thens.ezgradle.misc.buildConfigProps
 import me.thens.ezgradle.misc.configure
+import me.thens.ezgradle.misc.getDefaultPackageName
 import me.thens.ezgradle.misc.toPackageName
 import me.thens.ezgradle.misc.toVersionCode
 import org.gradle.api.Project
@@ -57,7 +58,7 @@ internal fun Project.configureAndroidLibrary() {
 
 private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
     android.apply {
-        namespace = "${project.group}.${project.name}".toPackageName()
+        namespace = getDefaultPackageName()
         compileSdk = 34
         defaultConfig {
             minSdk = 21

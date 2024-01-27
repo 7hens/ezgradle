@@ -26,6 +26,10 @@ fun <T> Project.configure(name: String, fn: T.() -> Unit) {
     extensions.configure(name, fn)
 }
 
+fun Project.getDefaultPackageName(): String {
+    return "$group.$name".toPackageName()
+}
+
 val Project.isAndroid: Boolean get() = extensions.findByName("android") != null
 
 val Project.isJava: Boolean get() = extensions.findByName("java") != null

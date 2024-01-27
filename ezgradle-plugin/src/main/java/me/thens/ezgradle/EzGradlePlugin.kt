@@ -9,8 +9,9 @@ import me.thens.ezgradle.config.configureKapt
 import me.thens.ezgradle.config.configureKotlin
 import me.thens.ezgradle.config.configureMavenPublish
 import me.thens.ezgradle.misc.generateBuildConfig
+import me.thens.ezgradle.misc.getDefaultPackageName
+import me.thens.ezgradle.misc.isAndroid
 import me.thens.ezgradle.misc.isJava
-import me.thens.ezgradle.misc.toPackageName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -22,10 +23,6 @@ class EzGradlePlugin : Plugin<Project> {
     }
 
     private fun Project.configure() {
-//        pluginManager.apply(kotlin("kapt"))
-        configurations.all {
-            resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
-        }
         configureAndroidApplication()
         configureAndroidLibrary()
         configureHilt()
@@ -44,15 +41,14 @@ class EzGradlePlugin : Plugin<Project> {
             }
         }
         afterEvaluate {
-            tasks.filter { it.name.startsWith("compile") && it.name.endsWith("Kotlin") }
-                .forEach {
-                    it.doFirst {
-                        if (isJava) {
-                            val packageName = "${project.group}.${projectDir.name}"
-                            generateBuildConfig(packageName.toPackageName())
-                        }
-                    }
+            if (isJava && !isAndroid) {
+                val generateBuildConfig = tasks.create("generateBuildConfig") {
+                    group = "build"
+                    doLast { generateBuildConfig(getDefaultPackageName()) }
                 }
+                tasks.filter { it.name.startsWith("compile") && it.name.endsWith("Kotlin") }
+                    .forEach { it.dependsOn(generateBuildConfig) }
+            }
         }
     }
 }
