@@ -14,6 +14,7 @@ fun Project.loadProperties(path: String) {
     properties.forEach { key, value -> extra[key.toString()] = value }
 }
 
+@Suppress("UNCHECKED_CAST")
 fun <T> ExtraPropertiesExtension.getOrElse(name: String, defaultVal: () -> T): T {
     return if (has(name)) get(name) as T else defaultVal()
 }
@@ -29,6 +30,8 @@ fun <T> Project.configure(name: String, fn: T.() -> Unit) {
 fun Project.getDefaultPackageName(): String {
     return "$group.$name".toPackageName()
 }
+
+fun Project.hasConfiguration(name: String): Boolean = configurations.findByName(name) != null
 
 val Project.isAndroid: Boolean get() = extensions.findByName("android") != null
 

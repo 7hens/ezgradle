@@ -4,10 +4,9 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import me.thens.ezgradle.BuildConfig
-import me.thens.ezgradle.misc.buildConfigProps
+import me.thens.ezgradle.misc.GenerateBuildConfigTask
 import me.thens.ezgradle.misc.configure
 import me.thens.ezgradle.misc.getDefaultPackageName
-import me.thens.ezgradle.misc.toPackageName
 import me.thens.ezgradle.misc.toVersionCode
 import org.gradle.api.Project
 
@@ -66,7 +65,7 @@ private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
             vectorDrawables {
                 useSupportLibrary = true
             }
-            buildConfigProps.entries.forEach { (key, value) ->
+            GenerateBuildConfigTask.getProperties(project).entries.forEach { (key, value) ->
                 buildConfigField("String", key, "\"$value\"")
                 manifestPlaceholders[key] = value
             }

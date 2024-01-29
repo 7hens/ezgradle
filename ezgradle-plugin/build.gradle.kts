@@ -73,7 +73,7 @@ fun Project.generateBuildConfig(packageName: String) {
     val outputFile = File(outputDir, "$packageDir/$className.kt")
     outputFile.parentFile?.mkdirs()
     val fields =
-        getConfigProps().entries.joinToString("\n   ") { "val ${it.key} = \"${it.value}\"" }
+        getConfigProps().entries.joinToString("\n   ") { "const val ${it.key} = \"${it.value}\"" }
     outputFile.writeText(
         """
         |package $packageName
@@ -86,10 +86,9 @@ fun Project.generateBuildConfig(packageName: String) {
 }
 
 afterEvaluate {
-    tasks.getByName("compileKotlin") {
-        doFirst {
-            generateBuildConfig("me.thens.ezgradle")
-        }
+    tasks.create("generateBuildConfig") {
+        tasks.getByName("compileKotlin").dependsOn(this)
+        doLast { generateBuildConfig("me.thens.ezgradle") }
     }
 //    tasks.getByName("publishToMavenLocal").apply {
 //        dependsOn(tasks.getByName("assemble"))
