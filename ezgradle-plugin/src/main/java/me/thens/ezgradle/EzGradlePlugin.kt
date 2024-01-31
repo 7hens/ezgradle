@@ -8,13 +8,12 @@ import me.thens.ezgradle.config.configureJavaPlatform
 import me.thens.ezgradle.config.configureKapt
 import me.thens.ezgradle.config.configureKotlin
 import me.thens.ezgradle.config.configureMavenPublish
-import me.thens.ezgradle.misc.generateProjectConfig
-import me.thens.ezgradle.misc.loadProperties
-import me.thens.ezgradle.misc.toPackageName
+import me.thens.ezgradle.lib.EzGradleBomManager
+import me.thens.ezgradle.misc.GenerateBuildConfigTask
+import me.thens.ezgradle.misc.isAndroid
+import me.thens.ezgradle.misc.isJava
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.dependencies
-import java.util.concurrent.TimeUnit
 
 class EzGradlePlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -22,12 +21,6 @@ class EzGradlePlugin : Plugin<Project> {
     }
 
     private fun Project.configure() {
-//        pluginManager.apply(kotlin("kapt"))
-        configurations.all {
-            resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
-        }
-        loadProperties("gradle.properties")
-        loadProperties("local.properties")
         configureAndroidApplication()
         configureAndroidLibrary()
         configureHilt()
@@ -36,23 +29,9 @@ class EzGradlePlugin : Plugin<Project> {
         configureKotlin()
         configureKapt()
         configureMavenPublish()
-        val ezGradleGroup = ProjectConfig.GROUP
-        val ezGradleVersion = ProjectConfig.VERSION
-        dependencies {
-            platform("$ezGradleGroup:ezgradle-bom:$ezGradleVersion").let { platform ->
-                listOf("implementation", "androidTestImplementation", "kapt", "annotationProcessor")
-                    .filter { configurations.findByName(it) != null }
-                    .forEach { add(it, platform) }
-            }
-        }
-        afterEvaluate {
-            tasks.filter { it.name.startsWith("compile") && it.name.endsWith("Kotlin") }
-                .forEach {
-                    it.doFirst {
-                        val packageName = "${project.group}.${projectDir.name}"
-                        generateProjectConfig(packageName.toPackageName())
-                    }
-                }
+        EzGradleBomManager(this).addDependencies()
+        if (isJava && !isAndroid) {
+            GenerateBuildConfigTask.register(this)
         }
     }
 }

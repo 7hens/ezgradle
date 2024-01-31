@@ -3,12 +3,12 @@ package me.thens.ezgradle.config
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
-import me.thens.ezgradle.ProjectConfig
+import me.thens.ezgradle.BuildConfig
+import me.thens.ezgradle.misc.GenerateBuildConfigTask
 import me.thens.ezgradle.misc.configure
-import me.thens.ezgradle.misc.toPackageName
+import me.thens.ezgradle.misc.getDefaultPackageName
 import me.thens.ezgradle.misc.toVersionCode
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.extra
 
 typealias AndroidCommonExtension = CommonExtension<*, *, *, *, *>
 
@@ -57,7 +57,7 @@ internal fun Project.configureAndroidLibrary() {
 
 private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
     android.apply {
-        namespace = "${project.group}.${project.name}".toPackageName()
+        namespace = getDefaultPackageName()
         compileSdk = 34
         defaultConfig {
             minSdk = 21
@@ -65,15 +65,10 @@ private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
             vectorDrawables {
                 useSupportLibrary = true
             }
-
-            val propPrefix = "project."
-            extra.properties.entries
-                .filter { it.key.startsWith(propPrefix) }
-                .map { it.key.substringAfter(propPrefix).uppercase() to it.value }
-                .forEach { (key, value) ->
-                    buildConfigField("String", key, "\"$value\"")
-                    manifestPlaceholders[key] = value
-                }
+            GenerateBuildConfigTask.getProperties(project).entries.forEach { (key, value) ->
+                buildConfigField("String", key, "\"$value\"")
+                manifestPlaceholders[key] = value
+            }
         }
 
         buildTypes {
@@ -90,7 +85,7 @@ private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
             buildConfig = true
         }
         composeOptions {
-            kotlinCompilerExtensionVersion = ProjectConfig.COMPOSE_COMPILER_VERSION
+            kotlinCompilerExtensionVersion = BuildConfig.COMPOSE_COMPILER_VERSION
         }
         packaging {
             resources {
