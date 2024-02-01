@@ -43,6 +43,7 @@ dependencies {
     implementation(plugin(kotlin("plugin.serialization")))
     implementation(plugin(kotlin("plugin.parcelize")))
     implementation(plugin("com.google.dagger.hilt.android"))
+    implementation(plugin("com.google.devtools.ksp"))
     implementation(gradleApi())
     implementation(localGroovy())
 }

@@ -32,6 +32,7 @@ dependencies {
         api(plugin(kotlin("plugin.serialization"), kotlinVersion))
         api(plugin(kotlin("plugin.parcelize"), kotlinVersion))
         api(plugin("com.google.android.libraries.mapsplatform.secrets-gradle-plugin", "2.0.1"))
+        api(plugin("com.google.devtools.ksp", "1.9.21-1.0.15"))
         val hiltVersion = "2.47"
         api(plugin("com.google.dagger.hilt.android", hiltVersion))
 
@@ -42,19 +43,19 @@ dependencies {
         api("androidx.annotation:annotation-experimental:1.3.1")
         api("androidx.appcompat:appcompat:1.6.1")
         api("androidx.appcompat:appcompat-resources:1.6.1")
-        val archVersion = "2.2.0"
-        api("androidx.arch.core:core-testing:$archVersion")
+        api("androidx.arch.core:core-testing:2.2.0")
         api("androidx.benchmark:benchmark-macro-junit4:1.2.2")
         api("androidx.biometric:biometric:1.1.0")
         api("androidx.bluetooth:bluetooth:1.0.0-alpha02")
-        val cameraXVersion = "1.4.0-alpha03"
-        api("androidx.camera:camera-core:$cameraXVersion")
-        api("androidx.camera:camera-camera2:$cameraXVersion")
-        api("androidx.camera:camera-lifecycle:$cameraXVersion")
-        api("androidx.camera:camera-video:$cameraXVersion")
-        api("androidx.camera:camera-view:$cameraXVersion")
-        api("androidx.camera:camera-mlkit-vision:$cameraXVersion")
-        api("androidx.camera:camera-extensions:$cameraXVersion")
+        "1.3.1".let {
+            api("androidx.camera:camera-core:$it")
+            api("androidx.camera:camera-camera2:$it")
+            api("androidx.camera:camera-lifecycle:$it")
+            api("androidx.camera:camera-video:$it")
+            api("androidx.camera:camera-view:$it")
+            api("androidx.camera:camera-mlkit-vision:$it")
+            api("androidx.camera:camera-extensions:$it")
+        }
         api("androidx.core:core-ktx:1.12.0")
         api("androidx.core:core-role:1.0.0")
         api("androidx.core:core-animation:1.0.0-rc01")
@@ -171,6 +172,7 @@ dependencies {
         api("com.google.dagger:hilt-android-compiler:$hiltVersion")
         api("com.google.dagger:hilt-compiler:$hiltVersion")
         api("com.google.dagger:hilt-android-testing:$hiltVersion")
+        api("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
         api("com.google.maps.android:maps-compose:2.11.4")
         api("com.google.maps.android:maps-ktx:5.0.0")
         api("com.google.zxing:android-core:3.5.2")

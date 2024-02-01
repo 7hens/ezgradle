@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
 //    id("maven-publish")
+    id("com.google.devtools.ksp")
     id("com.github.7hens.ezgradle")
 }
 

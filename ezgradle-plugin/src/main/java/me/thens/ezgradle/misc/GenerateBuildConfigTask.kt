@@ -9,6 +9,9 @@ import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.register
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.Properties
 
 abstract class GenerateBuildConfigTask : DefaultTask() {
@@ -77,6 +80,7 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
                 }
                 load(project.rootProject.file("local.properties"))
             }
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
             return mutableMapOf<String, Any>().apply {
                 myProps.forEach { (key, value) ->
                     key.toString()
@@ -86,6 +90,7 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
                 put("GROUP", project.group)
                 put("NAME", project.name)
                 put("VERSION", project.version)
+                put("BUILD_TIME", dateFormat.format(Date()))
             }
         }
 

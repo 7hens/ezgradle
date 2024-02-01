@@ -27,7 +27,7 @@ dependencyResolutionManagement {
 ```kotlin
 // build.gradle.kts
 plugins {
-    id("com.github.7hens.ezgradle") version "2023.12.04" apply false
+    id("com.github.7hens.ezgradle") version "$latest_version" apply false
     // You don't need to add the commented plugins below, because ezgradle has already add them.
 //    id("com.android.application") version "8.2.0" apply false
 //    id("org.jetbrains.kotlin.android") version "1.8.10" apply false
@@ -52,7 +52,4 @@ plugins {
 
 ## TODO
 
-- [ ] Add `BUILD_TIME` to BuildConfig class
-- [ ] Add kotlin ksp plugin
-- [ ] Add Git properties to BuildConfig class
 
