@@ -5,9 +5,9 @@ plugins {
     val agpVersion = System.getProperty("agp_version")
     if (System.getenv("EXCLUDES_SAMPLES") != "true") {
         id("com.github.7hens.ezgradle") version "-SNAPSHOT"
-        id("org.jetbrains.kotlin.android") version kotlinVersion apply false
-        id("com.android.application") version agpVersion apply false
-        id("com.android.library") version agpVersion apply false
+//        id("org.jetbrains.kotlin.android") version kotlinVersion apply false
+//        id("com.android.application") version agpVersion apply false
+//        id("com.android.library") version agpVersion apply false
     }
 }
 println("## PROP: ${property("TEST_PROP")}")

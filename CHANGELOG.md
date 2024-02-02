@@ -8,8 +8,7 @@
 ### 2024.01.01
 
 - [ ] Add `BUILD_TIME` to BuildConfig class
-- [ ] Update Kotlin to 1.9.21
-- [ ] Support ksp plugin and ksp api 1.9.21-1.0.15
+- [ ] Support ksp plugin and ksp api 1.9.20-1.0.14
 - [ ] Add `outdatedDependencies` task for project ezgradle-bom to show outdated dependencies
 - [ ] Add `updateDependencies` task for project ezgradle-bom to update outdated dependencies automatically
 
