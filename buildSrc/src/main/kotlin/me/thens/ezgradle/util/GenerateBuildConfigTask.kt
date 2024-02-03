@@ -1,4 +1,4 @@
-package me.thens.ezgradle.misc
+package me.thens.ezgradle.util
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -9,6 +9,9 @@ import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.register
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.Properties
 
 abstract class GenerateBuildConfigTask : DefaultTask() {
@@ -41,7 +44,7 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
             parentFile?.mkdirs()
             writeText(
                 """
-                |package $packageName
+                |package ${packageName.get()}
                 |
                 |object $CLASS_NAME {
                 |   $fields
@@ -58,9 +61,8 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
 
         fun register(project: Project) {
             project.afterEvaluate {
-                tasks.register<GenerateBuildConfigTask>(TASK_NAME) {
-                    group = "build"
-                    tasks.filter { it.name.startsWith("compile") && it.name.endsWith("Kotlin") }
+                tasks.register<GenerateBuildConfigTask>(TASK_NAME).apply {
+                    project.tasks.filter { it.name.startsWith("compile") && it.name.contains("Kotlin") }
                         .forEach { it.dependsOn(this) }
                 }
             }
@@ -77,6 +79,7 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
                 }
                 load(project.rootProject.file("local.properties"))
             }
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
             return mutableMapOf<String, Any>().apply {
                 myProps.forEach { (key, value) ->
                     key.toString()
@@ -86,6 +89,7 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
                 put("GROUP", project.group)
                 put("NAME", project.name)
                 put("VERSION", project.version)
+                put("BUILD_TIME", dateFormat.format(Date()))
             }
         }
 

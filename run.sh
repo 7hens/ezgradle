@@ -21,27 +21,33 @@ publish_to_local() {
   printf "Elapsed Time: %dm %ds\n" $((SECONDS / 60)) $((SECONDS % 60))
 }
 
-test_samples() {
-  if gradle_has_task ":sample-android-app:generateBuildConfig"; then
+gradle_has_task() {
+  if ./gradlew "$1" -m >/dev/null 2>/dev/null; then
+    echo 1
+  else
+    echo 0
+  fi
+}
+
+check_gradle_task() {
+  if [ "$(gradle_has_task ":sample-android-app:generateBuildConfig")" == 1 ]; then
     echo "error(sample-android-app): generateBuildConfig should not be registered"
-    return 1
+    exit 1
   fi
-  if gradle_has_task ":sample-android-lib:generateBuildConfig"; then
+  if [ "$(gradle_has_task ":sample-android-lib:generateBuildConfig")" == 1 ]; then
     echo "error(sample-android-lib): generateBuildConfig should not be registered"
-    return 1
+    exit 1
   fi
-  if [ "$(gradle_has_task ":sample-java-lib:generateBuildConfig"; echo $?)" != 0 ]; then
+  if [ "$(gradle_has_task ":sample-java-lib:generateBuildConfig")" == "0" ]; then
     echo "error(sample-java-lib): generateBuildConfig should be registered"
-    return 1
+    exit 1
   fi
+}
+
+test_samples() {
   echo "Assemble samples"
   ./gradlew projects assemble -Pversion=-SNAPSHOT
   printf "Elapsed Time: %dm %ds\n" $((SECONDS / 60)) $((SECONDS % 60))
-}
-
-gradle_has_task() {
-  ./gradlew "$1" -m >/dev/null 2>/dev/null
-  return $?
 }
 
 main "$@"

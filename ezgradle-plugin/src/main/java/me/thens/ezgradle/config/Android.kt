@@ -3,11 +3,11 @@ package me.thens.ezgradle.config
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
-import me.thens.ezgradle.BuildConfig
-import me.thens.ezgradle.misc.GenerateBuildConfigTask
-import me.thens.ezgradle.misc.configure
-import me.thens.ezgradle.misc.getDefaultPackageName
-import me.thens.ezgradle.misc.toVersionCode
+import com.github.a7hens.ezgradle.com.github.a7hens.ezgradle.gradle.plugin.BuildConfig
+import me.thens.ezgradle.util.GenerateBuildConfigTask
+import me.thens.ezgradle.util.configure
+import me.thens.ezgradle.util.getDefaultPackageName
+import me.thens.ezgradle.util.toVersionCode
 import org.gradle.api.Project
 
 typealias AndroidCommonExtension = CommonExtension<*, *, *, *, *>
@@ -85,7 +85,7 @@ private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
             buildConfig = true
         }
         composeOptions {
-            kotlinCompilerExtensionVersion = BuildConfig.COMPOSE_COMPILER_VERSION
+            kotlinCompilerExtensionVersion = "1.5.5"
         }
         packaging {
             resources {

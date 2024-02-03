@@ -1,6 +1,6 @@
 package me.thens.ezgradle.config
 
-import me.thens.ezgradle.misc.configure
+import me.thens.ezgradle.util.configure
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlatformExtension

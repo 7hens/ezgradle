@@ -1,4 +1,4 @@
-import java.util.Properties
+import me.thens.ezgradle.util.GenerateBuildConfigTask
 
 plugins {
     `kotlin-dsl`
@@ -9,6 +9,7 @@ plugins {
 sourceSets {
     get("main").apply {
         kotlin.srcDirs("build/generated/src/main/kotlin")
+        kotlin.srcDirs("../buildSrc/src/main/kotlin")
     }
 }
 
@@ -43,55 +44,13 @@ dependencies {
     implementation(plugin(kotlin("plugin.serialization")))
     implementation(plugin(kotlin("plugin.parcelize")))
     implementation(plugin("com.google.dagger.hilt.android"))
+    implementation(plugin("com.google.devtools.ksp"))
     implementation(gradleApi())
     implementation(localGroovy())
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
+    testImplementation("junit:junit")
 }
 
-private fun Project.getConfigProps(): Map<Any, Any> {
-    val gradleKeys = Properties().run {
-        rootProject.file("gradle.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
-        keys
-    }
-    val myProps = Properties().apply {
-        properties.forEach { (k, v) -> k.takeIf { it in gradleKeys }?.let { put(k, v ?: "") } }
-        rootProject.file("local.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
-    }
-    return mutableMapOf<Any, Any>().apply {
-        myProps.forEach { (key, value) ->
-            key.toString().takeIf { it.matches(Regex("[A-Z_]+")) }?.let { put(it, value ?: "") }
-        }
-        put("GROUP", project.group)
-        put("NAME", project.name)
-        put("VERSION", project.version)
-    }
-}
-
-fun Project.generateBuildConfig(packageName: String) {
-    val className = "BuildConfig"
-    val packageDir = packageName.replace('.', '/')
-    val outputDir = layout.buildDirectory.file("generated/src/main/kotlin/").get().asFile
-    val outputFile = File(outputDir, "$packageDir/$className.kt")
-    outputFile.parentFile?.mkdirs()
-    val fields =
-        getConfigProps().entries.joinToString("\n   ") { "const val ${it.key} = \"${it.value}\"" }
-    outputFile.writeText(
-        """
-        |package $packageName
-        |
-        |object $className {
-        |   $fields
-        |}
-        """.trimMargin("|")
-    )
-}
-
-afterEvaluate {
-    tasks.create("generateBuildConfig") {
-        tasks.getByName("compileKotlin").dependsOn(this)
-        doLast { generateBuildConfig("me.thens.ezgradle") }
-    }
-//    tasks.getByName("publishToMavenLocal").apply {
-//        dependsOn(tasks.getByName("assemble"))
-//    }
-}
-
+GenerateBuildConfigTask.register(project)

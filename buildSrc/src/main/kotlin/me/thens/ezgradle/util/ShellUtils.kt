@@ -1,4 +1,4 @@
-package me.thens.ezgradle.misc
+package me.thens.ezgradle.util
 
 import org.gradle.api.Project
 

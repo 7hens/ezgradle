@@ -1,8 +1,10 @@
 package me.thens.ezgradle.lib
 
+import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
-class BuiltInLibs(dependencies: DependencyHandler): DependencyHandler by dependencies {
+class BuiltInLibs(val project: Project, dependencies: DependencyHandler) :
+    DependencyHandler by dependencies {
 
     fun compose() {
         implementation("androidx.activity:activity-compose")
@@ -18,15 +20,18 @@ class BuiltInLibs(dependencies: DependencyHandler): DependencyHandler by depende
 
     fun hilt() {
         implementation("com.google.dagger:hilt-android")
-//        kapt("com.google.dagger:hilt-compiler")
-        kapt("com.google.dagger:hilt-android-compiler")
-        kapt("androidx.hilt:hilt-compiler")
-//    implementation("androidx.hilt:hilt-navigation-compose")
+        add(ap, "com.google.dagger:hilt-android-compiler")
+        add(ap, "androidx.hilt:hilt-compiler")
     }
 
     fun test() {
         testImplementation("junit:junit")
         androidTestImplementation("androidx.test.ext:junit")
         androidTestImplementation("androidx.test.espresso:espresso-core")
+    }
+
+    private val ap: String by lazy {
+        listOf("ksp", "kapt", "annotationProcessor")
+            .first { project.configurations.findByName(it) != null }
     }
 }

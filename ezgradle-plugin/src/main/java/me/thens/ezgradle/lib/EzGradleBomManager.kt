@@ -1,14 +1,14 @@
 package me.thens.ezgradle.lib
 
-import me.thens.ezgradle.BuildConfig
-import me.thens.ezgradle.misc.hasConfiguration
+import com.github.a7hens.ezgradle.com.github.a7hens.ezgradle.gradle.plugin.BuildConfig
+import me.thens.ezgradle.util.hasConfiguration
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 
 
 class EzGradleBomManager(val project: Project) {
 
-    fun addDependencies(version: String = BuildConfig.VERSION) {
+    fun addDependencies(version: String) {
         project.dependencies {
             val bom = platform("${BuildConfig.GROUP}:$EZGRADLE_BOM:$version")
             configurations
