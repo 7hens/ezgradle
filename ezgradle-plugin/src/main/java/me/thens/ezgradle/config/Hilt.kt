@@ -1,7 +1,7 @@
 package me.thens.ezgradle.config
 
 import dagger.hilt.android.plugin.HiltExtension
-import me.thens.ezgradle.misc.configure
+import me.thens.ezgradle.util.configure
 import org.gradle.api.Project
 
 internal fun Project.configureHilt() {

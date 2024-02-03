@@ -1,10 +1,10 @@
 package me.thens.ezgradle.config
 
-import me.thens.ezgradle.misc.configure
-import me.thens.ezgradle.misc.isAndroid
-import me.thens.ezgradle.misc.isJava
-import me.thens.ezgradle.misc.isJavaPlatform
-import me.thens.ezgradle.misc.isRoot
+import me.thens.ezgradle.util.configure
+import me.thens.ezgradle.util.isAndroid
+import me.thens.ezgradle.util.isJava
+import me.thens.ezgradle.util.isJavaPlatform
+import me.thens.ezgradle.util.isRoot
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication

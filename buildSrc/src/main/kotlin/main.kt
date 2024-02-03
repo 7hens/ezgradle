@@ -1,8 +1,8 @@
-import org.gradle.api.Project
 import me.thens.ezgradle.dependency.DependencyDoctor
+import org.gradle.api.tasks.TaskContainer
 
-fun Project.createTask() {
-    tasks.create("outdatedDependencies") {
+fun TaskContainer.registerLogDependencies() {
+    create("logDependencies") {
         doLast {
             DependencyDoctor(project).run()
         }

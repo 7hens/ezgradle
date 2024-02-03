@@ -8,8 +8,7 @@ javaPlatform {
 }
 
 dependencies {
-    val kotlinVersion = System.getProperty("kotlin_version")
-    val agpVersion = System.getProperty("agp_version")
+    val kotlinVersion = "1.9.20"
     api(platform("androidx.compose:compose-bom:2023.10.01"))
     api(platform("com.fasterxml.jackson:jackson-bom:2.16.0"))
     api(platform("com.google.firebase:firebase-bom:32.7.0"))
@@ -25,8 +24,8 @@ dependencies {
         fun plugin(id: String, version: String) = "$id:$id.gradle.plugin:$version"
         fun kotlin(name: String) = "org.jetbrains.kotlin.$name"
         api(plugin("androidx.benchmark", "1.2.2"))
-        api(plugin("com.android.application", agpVersion))
-        api(plugin("com.android.library", agpVersion))
+        api(plugin("com.android.application", "8.2.0"))
+        api(plugin("com.android.library", "8.2.0"))
         api(plugin(kotlin("jvm"), kotlinVersion))
         api(plugin(kotlin("android"), kotlinVersion))
         api(plugin(kotlin("plugin.serialization"), kotlinVersion))
@@ -139,6 +138,8 @@ dependencies {
         api("androidx.work:work-gcm:2.9.0")
         api("androidx.work:work-testing:2.9.0")
         api("androidx.work:work-multiprocess:2.9.0")
+        api("app.softwork:kotlinx-serialization-csv:0.0.16")
+        api("app.softwork:kotlinx-serialization-flf:0.0.16")
         api("ch.acra:acra-advanced-scheduler:5.11.3")
         api("ch.acra:acra-core:5.11.3")
         api("ch.acra:acra-dialog:5.11.3")
@@ -148,9 +149,15 @@ dependencies {
         api("ch.acra:acra-notification:5.11.3")
         api("ch.acra:acra-toast:5.11.3")
         api("com.airbnb.android:lottie:6.2.0")
+        api("com.akuleshov7:ktoml-core:0.5.1")
+        api("com.akuleshov7:ktoml-file:0.5.1")
         api("com.alibaba.fastjson2:fastjson2:2.0.46")
         api("com.alibaba:fastjson:2.0.46")
         api("com.github.bumptech.glide:glide:4.16.0")
+        api("io.github.pdvrieze.xmlutil:serialization:0.86.3")
+        api("io.github.pdvrieze.xmlutil:serialization-jvm:0.86.3")
+        api("io.github.pdvrieze.xmlutil:serialization-android:0.86.3")
+        api("io.github.pdvrieze.xmlutil:serialization-js:0.86.3")
         api("com.github.PhilJay:MPAndroidChart:v3.1.0")
         api("com.google.accompanist:accompanist-drawablepainter:0.32.0")
         api("com.google.accompanist:accompanist-permissions:0.32.0")
@@ -186,13 +193,22 @@ dependencies {
         api("io.reactivex.rxjava3:rxjava:3.1.8")
         api("io.reactivex.rxjava3:rxandroid:3.0.2")
         api("junit:junit:4.13.2")
+        api("net.mamoe.yamlkt:yamlkt:0.13.0")
         api("org-apache.commons:commons-lang3:3.14.0")
         api("org-apache.commons:commons-collections4:4.4")
         api("org.aspectj:aspect-core:3.24.2")
         api("org.javassist:javassist:3.30.1-GA")
-        api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+        api("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
         api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2")
         api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0-RC2")
+        api("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+        api("org.jetbrains.kotlinx:kotlinx-io-core:0.3.1")
+        api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+        api("org.jetbrains.kotlinx:kotlinx-serialization-json-okio:1.5.1")
+        api("org.jetbrains.kotlinx:kotlinx-serialization-json-hocon:1.5.1")
+        api("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.5.1")
+        api("org.jetbrains.kotlinx:kotlinx-serialization-cbor:1.5.1")
+        api("org.jetbrains.kotlinx:kotlinx-serialization-properties:1.5.1")
         api("org.jooq:jool:0.9.15")
         api("org.jooq:joor:0.9.15")
         api("org.jooq:joor-java-8:0.9.15")
@@ -209,4 +225,4 @@ publishing {
     }
 }
 
-createTask()
+tasks.registerLogDependencies()

@@ -1,4 +1,4 @@
-package me.thens.ezgradle.misc
+package me.thens.ezgradle.util
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -44,7 +44,7 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
             parentFile?.mkdirs()
             writeText(
                 """
-                |package $packageName
+                |package ${packageName.get()}
                 |
                 |object $CLASS_NAME {
                 |   $fields
@@ -61,9 +61,8 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
 
         fun register(project: Project) {
             project.afterEvaluate {
-                tasks.register<GenerateBuildConfigTask>(TASK_NAME) {
-                    group = "build"
-                    tasks.filter { it.name.startsWith("compile") && it.name.endsWith("Kotlin") }
+                tasks.register<GenerateBuildConfigTask>(TASK_NAME).apply {
+                    project.tasks.filter { it.name.startsWith("compile") && it.name.contains("Kotlin") }
                         .forEach { it.dependsOn(this) }
                 }
             }

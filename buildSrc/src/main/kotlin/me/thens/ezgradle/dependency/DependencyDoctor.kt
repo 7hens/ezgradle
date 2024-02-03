@@ -9,7 +9,7 @@ class DependencyDoctor(private val project: Project) {
         logAll()
         DependencyBomManager(project).apply {
             project.file("__local").mkdirs()
-            output(parseProject(), project.file("__local/local-bom.json"))
+            output(parseProject(), project.file("__local/ezgradle-bom.json"))
         }
     }
 

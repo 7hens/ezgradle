@@ -9,18 +9,20 @@ import me.thens.ezgradle.config.configureKapt
 import me.thens.ezgradle.config.configureKotlin
 import me.thens.ezgradle.config.configureMavenPublish
 import me.thens.ezgradle.lib.EzGradleBomManager
-import me.thens.ezgradle.misc.GenerateBuildConfigTask
-import me.thens.ezgradle.misc.isAndroid
-import me.thens.ezgradle.misc.isJava
+import me.thens.ezgradle.util.GenerateBuildConfigTask
+import me.thens.ezgradle.util.isAndroid
+import me.thens.ezgradle.util.isJava
+import me.thens.ezgradle.model.EzGradleProperties
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class EzGradlePlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        target.configure()
+        val ezgradleProperties = EzGradleProperties.from(target)
+        target.configure(ezgradleProperties)
     }
 
-    private fun Project.configure() {
+    private fun Project.configure(ezGradleProperties: EzGradleProperties) {
         configureAndroidApplication()
         configureAndroidLibrary()
         configureHilt()
@@ -29,8 +31,8 @@ class EzGradlePlugin : Plugin<Project> {
         configureKotlin()
         configureKapt()
         configureMavenPublish()
-        EzGradleBomManager(this).addDependencies()
-        if (isJava && !isAndroid) {
+        EzGradleBomManager(this).addDependencies(ezGradleProperties.bomVersion)
+        if (ezGradleProperties.generateBuildConfig && isJava && !isAndroid) {
             GenerateBuildConfigTask.register(this)
         }
     }

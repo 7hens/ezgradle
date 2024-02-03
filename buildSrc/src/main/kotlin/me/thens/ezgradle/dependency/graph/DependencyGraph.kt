@@ -1,4 +1,4 @@
-package me.thens.ezgradle.dependency.model
+package me.thens.ezgradle.dependency.graph
 
 import kotlinx.serialization.Serializable
 import me.thens.ezgradle.dependency.bom.ArtifactKey

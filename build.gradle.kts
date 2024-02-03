@@ -1,18 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 plugins {
-    val kotlinVersion = System.getProperty("kotlin_version")
-    val agpVersion = System.getProperty("agp_version")
     if (System.getenv("EXCLUDES_SAMPLES") != "true") {
         id("com.github.7hens.ezgradle") version "-SNAPSHOT"
-//        id("org.jetbrains.kotlin.android") version kotlinVersion apply false
-//        id("com.android.application") version agpVersion apply false
-//        id("com.android.library") version agpVersion apply false
     }
 }
-println("## PROP: ${property("TEST_PROP")}")
 
 allprojects {
+    group = "com.github.7hens.ezgradle"
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
     }
