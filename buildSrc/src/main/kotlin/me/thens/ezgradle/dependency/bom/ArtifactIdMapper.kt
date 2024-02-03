@@ -1,20 +1,20 @@
-package me.thens.ezgradle
+package me.thens.ezgradle.dependency.bom
 
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleVersionSelector
 
-operator fun RepoCoordinate.Companion.invoke(notion: String): RepoCoordinate {
+operator fun ArtifactKey.Companion.invoke(notion: String): ArtifactKey {
     val (group, name, version) = notion.split(":")
-    return RepoCoordinate(group, name, version)
+    return ArtifactKey(group, name, version)
 }
 
-operator fun RepoCoordinate.Companion.invoke(dependency: Dependency) = RepoCoordinate(
+operator fun ArtifactKey.Companion.invoke(dependency: Dependency) = ArtifactKey(
     group = dependency.group!!,
     name = dependency.name,
     version = dependency.version!!,
 )
 
-operator fun RepoCoordinate.Companion.invoke(dependency: ModuleVersionSelector) = RepoCoordinate(
+operator fun ArtifactKey.Companion.invoke(dependency: ModuleVersionSelector) = ArtifactKey(
     group = dependency.group,
     name = dependency.name,
     version = dependency.version!!,

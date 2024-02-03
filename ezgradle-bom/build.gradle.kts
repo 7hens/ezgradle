@@ -148,6 +148,8 @@ dependencies {
         api("ch.acra:acra-notification:5.11.3")
         api("ch.acra:acra-toast:5.11.3")
         api("com.airbnb.android:lottie:6.2.0")
+        api("com.alibaba.fastjson2:fastjson2:2.0.46")
+        api("com.alibaba:fastjson:2.0.46")
         api("com.github.bumptech.glide:glide:4.16.0")
         api("com.github.PhilJay:MPAndroidChart:v3.1.0")
         api("com.google.accompanist:accompanist-drawablepainter:0.32.0")
@@ -189,6 +191,8 @@ dependencies {
         api("org.aspectj:aspect-core:3.24.2")
         api("org.javassist:javassist:3.30.1-GA")
         api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2")
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0-RC2")
         api("org.jooq:jool:0.9.15")
         api("org.jooq:joor:0.9.15")
         api("org.jooq:joor-java-8:0.9.15")
@@ -205,4 +209,4 @@ publishing {
     }
 }
 
-//createTask()
+createTask()

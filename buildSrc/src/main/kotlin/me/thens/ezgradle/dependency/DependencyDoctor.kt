@@ -1,14 +1,16 @@
-package me.thens.ezgradle
+package me.thens.ezgradle.dependency
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import me.thens.ezgradle.dependency.bom.DependencyBom
+import me.thens.ezgradle.dependency.bom.DependencyBomManager
 import org.gradle.api.Project
 
 class DependencyDoctor(private val project: Project) {
     fun run() {
-//        logAll()
-        testMavenSearch()
+        logAll()
+        DependencyBomManager(project).apply {
+            project.file("__local").mkdirs()
+            output(parseProject(), project.file("__local/local-bom.json"))
+        }
     }
 
     fun logAll() {
@@ -23,14 +25,6 @@ class DependencyDoctor(private val project: Project) {
             val name = dependency.name
             val version = dependency.version
             println("Constraint: $group:$name:$version")
-        }
-    }
-
-    private fun testMavenSearch() {
-        val coroutineScope = CoroutineScope(Dispatchers.IO)
-        runBlocking {
-//            api(platform("androidx.compose:compose-bom:2023.10.01"))
-            println("junit: " + MavenSearch.queryLatestVersion("junit", "junit"))
         }
     }
 }
