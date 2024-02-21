@@ -8,8 +8,11 @@ javaPlatform {
 }
 
 dependencies {
-    val kotlinVersion = "1.9.20"
-    api(platform("androidx.compose:compose-bom:2023.10.01"))
+    val kotlinVersion = property("KOTLIN_VERSION").toString()
+    val agpVersion = property("AGP_VERSION").toString()
+    val kspVersion = property("KSP_VERSION").toString()
+    // https://developer.android.com/jetpack/compose/bom/bom-mapping
+    api(platform("androidx.compose:compose-bom:2024.02.00"))
     api(platform("com.fasterxml.jackson:jackson-bom:2.16.0"))
     api(platform("com.google.firebase:firebase-bom:32.7.0"))
     api(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
@@ -22,20 +25,21 @@ dependencies {
     api(platform("org.ow2.asm:asm-bom:9.6"))
     constraints {
         fun plugin(id: String, version: String) = "$id:$id.gradle.plugin:$version"
-        fun kotlin(name: String) = "org.jetbrains.kotlin.$name"
         api(plugin("androidx.benchmark", "1.2.2"))
-        api(plugin("com.android.application", "8.2.0"))
-        api(plugin("com.android.library", "8.2.0"))
-        api(plugin(kotlin("jvm"), kotlinVersion))
-        api(plugin(kotlin("android"), kotlinVersion))
-        api(plugin(kotlin("plugin.serialization"), kotlinVersion))
-        api(plugin(kotlin("plugin.parcelize"), kotlinVersion))
+        api(plugin("com.android.application", agpVersion))
+        api(plugin("com.android.library", agpVersion))
+        api(plugin("org.jetbrains.kotlin.jvm", kotlinVersion))
+        api(plugin("org.jetbrains.kotlin.android", kotlinVersion))
+        api(plugin("org.jetbrains.kotlin.plugin.serialization", kotlinVersion))
+        api(plugin("org.jetbrains.kotlin.plugin.parcelize", kotlinVersion))
         api(plugin("com.google.android.libraries.mapsplatform.secrets-gradle-plugin", "2.0.1"))
-        api(plugin("com.google.devtools.ksp", "1.9.20-1.0.14"))
+        api(plugin("com.google.devtools.ksp", kspVersion))
         api(plugin("com.google.dagger.hilt.android", "2.47"))
 
+        // https://developer.android.com/jetpack/androidx/releases/activity
+        // https://maven.google.com/web/index.html
         api("androidx.activity:activity-ktx:1.8.2")
-        api("androidx.activity:activity-compose:1.8.0")
+        api("androidx.activity:activity-compose:1.8.2")
         api("androidx.ads:ads-identifier:1.0.0-alpha05")
         api("androidx.annotation:annotation:1.7.1")
         api("androidx.annotation:annotation-experimental:1.3.1")

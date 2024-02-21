@@ -39,7 +39,7 @@ internal fun Project.configureAndroidApplication() {
         defaultConfig {
             val version = project.version.toString()
             applicationId = namespace
-            targetSdk = compileSdk
+            targetSdk = BuildConfig.ANDROID_TARGET_SDK.toInt()
             versionCode = version.toVersionCode()
             versionName = version
         }
@@ -58,9 +58,9 @@ internal fun Project.configureAndroidLibrary() {
 private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
     android.apply {
         namespace = getDefaultPackageName()
-        compileSdk = 34
+        compileSdk = BuildConfig.ANDROID_TARGET_SDK.toInt()
         defaultConfig {
-            minSdk = 21
+            minSdk = BuildConfig.ANDROID_MIN_SDK.toInt()
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             vectorDrawables {
                 useSupportLibrary = true
@@ -85,7 +85,7 @@ private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
             buildConfig = true
         }
         composeOptions {
-            kotlinCompilerExtensionVersion = "1.5.5"
+            kotlinCompilerExtensionVersion = BuildConfig.COMPOSE_COMPILER_VERSION
         }
         packaging {
             resources {
