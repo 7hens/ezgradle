@@ -52,4 +52,4 @@ plugins {
 
 ## TODO
 
-
+- [x] Add `localProject("$projectName")` api for multi-module.

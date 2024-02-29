@@ -18,4 +18,6 @@ dependencies {
     implementation("androidx.core:core-ktx")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android")
+    implementation(localProject(":sample-java-lib"))
+    implementation(localProject(":sample-android-lib"))
 }
