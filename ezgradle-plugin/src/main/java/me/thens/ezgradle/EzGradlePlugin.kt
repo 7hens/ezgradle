@@ -36,4 +36,7 @@ class EzGradlePlugin : Plugin<Project> {
             GenerateBuildConfigTask.register(this)
         }
     }
+
+    private val Project.isReleaseTask: Boolean
+        get() = gradle.startParameter.taskNames.any { it.contains(Regex("[Rr]elease")) }
 }

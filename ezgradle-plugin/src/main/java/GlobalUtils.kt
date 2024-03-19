@@ -6,4 +6,10 @@ fun Project.builtInLibs(block: BuiltInLibs.() -> Unit) {
     block(BuiltInLibs(this, dependencies))
 }
 
+fun Project.localProject(name: String): Any {
+    return findProject(name) ?: run {
+        val projectName = name.substringAfterLast(":")
+        "$group:$projectName:$version"
+    }
+}
 

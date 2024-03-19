@@ -22,7 +22,7 @@ publish_to_local() {
 }
 
 gradle_has_task() {
-  if ./gradlew "$1" -m >/dev/null 2>/dev/null; then
+  if MODULES='*' ./gradlew "$1" -m >/dev/null 2>/dev/null; then
     echo 1
   else
     echo 0
@@ -46,7 +46,7 @@ check_gradle_task() {
 
 test_samples() {
   echo "Assemble samples"
-  ./gradlew projects assemble -Pversion=-SNAPSHOT
+  MODULES='*' ./gradlew projects assemble -Pversion=-SNAPSHOT
   printf "Elapsed Time: %dm %ds\n" $((SECONDS / 60)) $((SECONDS % 60))
 }
 
