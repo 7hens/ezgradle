@@ -46,6 +46,7 @@ dependencies {
         api("androidx.appcompat:appcompat:1.6.1")
         api("androidx.appcompat:appcompat-resources:1.6.1")
         api("androidx.arch.core:core-testing:2.2.0")
+        api("androidx.autofill:autofill:1.1.0")
         api("androidx.benchmark:benchmark-macro-junit4:1.2.2")
         api("androidx.biometric:biometric:1.1.0")
         api("androidx.bluetooth:bluetooth:1.0.0-alpha02")
@@ -56,6 +57,8 @@ dependencies {
         api("androidx.camera:camera-view:1.3.1")
         api("androidx.camera:camera-mlkit-vision:1.3.1")
         api("androidx.camera:camera-extensions:1.3.1")
+        api("androidx.constraintlayout:constraintlayout:2.1.4")
+        api("androidx.constraintlayout:constraintlayout-compose:1.0.1")
         api("androidx.core:core-ktx:1.12.0")
         api("androidx.core:core-role:1.0.0")
         api("androidx.core:core-animation:1.0.0-rc01")
@@ -217,6 +220,9 @@ dependencies {
         api("org.jooq:joor:0.9.15")
         api("org.jooq:joor-java-8:0.9.15")
         api("org.jsoup:jsoup:1.17.1")
+        api("org.robolectric:android-all:14-robolectric-10818077")
+        api("org.robolectric:robolectric:4.11.1")
+        api("org.robolectric:sandbox:4.11.1")
     }
 }
 

@@ -25,11 +25,13 @@ project(":ezgradle-plugin").name = "com.github.7hens.ezgradle.gradle.plugin"
 
 val props = Properties().apply { file("local.properties").reader().use { load(it) } }
 if (System.getenv("EXCLUDES_SAMPLES") != "true") {
-    include(":sample-android-app")
-    val modules = props.getProperty("project.activeModules", "").split(",").map { it.trim() }
+    val moduleText = System.getenv("MODULES") ?: props.getProperty("modules") ?: ""
+    val modules = moduleText.split(",").map { it.trim() }.toSet()
     val isPublish = gradle.startParameter.taskNames.any { it.contains(Regex("[Pp]ublish")) }
     val containsAll = isPublish || modules.contains("*")
-    listOf("sample-android-lib", "sample-java-lib")
-        .filter { modules.contains(it) || containsAll }
+    (rootDir.listFiles() ?: emptyArray())
+        .filter { File(it, "build.gradle.kts").exists() }
+        .map { it.name }
+        .filter { it.startsWith("sample-") && (modules.contains(it) || containsAll) }
         .forEach { include(":$it") }
 }
