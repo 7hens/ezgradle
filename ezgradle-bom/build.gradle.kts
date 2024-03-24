@@ -17,7 +17,7 @@ dependencies {
     api(platform("com.google.firebase:firebase-bom:32.7.0"))
     api(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
     api(platform("io.coil-kt:coil-bom:2.5.0"))
-    api(platform("io.github.jan-tennert.supabase:bom:1.4.7"))
+    api(platform("io.github.jan-tennert.supabase:bom:2.2.2"))
     api(platform("io.insert-koin:koin-bom:3.5.3"))
     api(platform("org.junit:junit-bom:5.10.1"))
     api(platform("org.mockito:mockito-bom:5.8.0"))
