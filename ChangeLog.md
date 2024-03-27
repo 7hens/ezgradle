@@ -2,6 +2,7 @@
 
 ## TODO
 
+- Migrate platform to version catalog
 - Add `ezgradle.logLevel` to modify the log level
 - Add Git properties to BuildConfig class
 - Add `outdatedDependencies` task for project ezgradle-bom to show outdated dependencies

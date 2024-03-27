@@ -50,3 +50,11 @@ plugins {
 // }
 ```
 
+## References
+
+- [Google Maven](https://maven.google.com/web/index.html)
+- [Compose BOM](https://developer.android.com/jetpack/compose/bom/bom-mapping)
+- [Compose Release](https://developer.android.com/jetpack/androidx/releases/compose-kotlin)
+- [KSP Release](https://github.com/google/ksp/releases)
+- [Jetpack Release](https://developer.android.com/jetpack/androidx/releases/activity)
+

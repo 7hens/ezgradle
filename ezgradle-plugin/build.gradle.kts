@@ -32,25 +32,27 @@ gradlePlugin {
     }
 }
 
-dependencies {
-    fun plugin(id: String) = "$id:$id.gradle.plugin"
-    fun kotlin(name: String) = "org.jetbrains.kotlin.$name"
+fun Provider<PluginDependency>.plugin(): Provider<String> {
+    return map { it.run { "$pluginId:$pluginId.gradle.plugin:$version" } }
+}
 
-    implementation(platform(project(":ezgradle-bom")))
-    implementation(plugin("com.android.application"))
-    implementation(plugin("com.android.library"))
-    implementation(plugin(kotlin("jvm")))
-    implementation(plugin(kotlin("android")))
-    implementation(plugin(kotlin("plugin.serialization")))
-    implementation(plugin(kotlin("plugin.parcelize")))
-    implementation(plugin("com.google.dagger.hilt.android"))
-    implementation(plugin("com.google.devtools.ksp"))
+dependencies {
+//    fun plugin(id: String) = "$id:$id.gradle.plugin"
+//    fun kotlin(name: String) = "org.jetbrains.kotlin.$name"
+
     implementation(gradleApi())
     implementation(localGroovy())
-
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
-    testImplementation("junit:junit")
+    implementation(libs.plugins.android.application.plugin())
+    implementation(libs.plugins.android.library.plugin())
+    implementation(libs.plugins.kotlin.jvm.plugin())
+    implementation(libs.plugins.kotlin.android.plugin())
+    implementation(libs.plugins.kotlin.serialization.plugin())
+//    implementation(libs.plugins.kotlin.parcelize.plugin())
+    implementation(libs.plugins.dagger.hilt.android.plugin())
+    implementation(libs.plugins.ksp.plugin())
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.json)
+    testImplementation(libs.junit)
 }
 
 GenerateBuildConfigTask.register(project)

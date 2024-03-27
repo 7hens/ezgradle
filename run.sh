@@ -1,13 +1,57 @@
 #!/usr/bin/env bash
 
 main() {
-  clear
-  uname -a
-  publish_to_local
-  test_samples
+  set -e
+  local cmd="$1"
+  shift
+  local run_cmd="run_$cmd"
+  local py_file=".devops/$cmd.py"
+  if [ "$(type -t "$run_cmd")" = function ]; then
+    "$run_cmd" "$@"
+  elif [ -f "$py_file" ]; then
+    run_py "$py_file" "$@"
+  else
+    echo "Unrecognized command: $*"
+  fi
 }
 
-publish_to_local() {
+run_py() {
+  run_py_pipenv "$@"
+}
+
+run_py_pipenv() {
+  local script="$1"
+  shift
+  command -v pipenv >/dev/nul || pip install --user pipenv
+  pipenv install > /dev/nul
+  pipenv run python "$script" "$@"
+}
+
+run_py_venv() {
+    run_venv pip install -r "$repo_dir/requirements.txt" > /dev/nul
+    run_venv python "$repo_dir/src/xpy/main.py" "$@"
+}
+
+run_venv() {
+    local cmd="$1"
+    shift
+    local script
+    if x_is_win; then
+        script="$repo_dir/.venv/Scripts/$cmd"
+    else
+        script="$repo_dir/.venv/bin/$cmd"
+    fi
+    python -m venv .venv
+    chmod +x "$script"
+    "$script" "$@"
+}
+
+run_test() {
+  run_publish
+  run_test_samples
+}
+
+run_publish() {
   echo "Run task :publishToMavenLocal"
   local group=com.github.7hens.ezgradle
   local repo_dir=~/.m2/repository/${group//.//}
@@ -18,6 +62,12 @@ publish_to_local() {
     -Pversion=-SNAPSHOT -xtest publishToMavenLocal --stacktrace
   ls -d $repo_dir/$group.gradle.plugin*
   ls -d $repo_dir/ezgradle-bom*
+  printf "Elapsed Time: %dm %ds\n" $((SECONDS / 60)) $((SECONDS % 60))
+}
+
+run_test_samples() {
+  echo "Assemble samples"
+  MODULES='*' ./gradlew projects assemble -Pversion=-SNAPSHOT
   printf "Elapsed Time: %dm %ds\n" $((SECONDS / 60)) $((SECONDS % 60))
 }
 
@@ -42,12 +92,6 @@ check_gradle_task() {
     echo "error(sample-java-lib): generateBuildConfig should be registered"
     exit 1
   fi
-}
-
-test_samples() {
-  echo "Assemble samples"
-  MODULES='*' ./gradlew projects assemble -Pversion=-SNAPSHOT
-  printf "Elapsed Time: %dm %ds\n" $((SECONDS / 60)) $((SECONDS % 60))
 }
 
 main "$@"

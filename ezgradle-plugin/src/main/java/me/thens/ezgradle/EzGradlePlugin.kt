@@ -31,7 +31,9 @@ class EzGradlePlugin : Plugin<Project> {
         configureKotlin()
         configureKapt()
         configureMavenPublish()
-        EzGradleBomManager(this).addDependencies(ezGradleProperties.bomVersion)
+        if (ezGradleProperties.enableBom) {
+            EzGradleBomManager(this).addDependencies(ezGradleProperties.bomVersion)
+        }
         if (ezGradleProperties.generateBuildConfig && isJava && !isAndroid) {
             GenerateBuildConfigTask.register(this)
         }

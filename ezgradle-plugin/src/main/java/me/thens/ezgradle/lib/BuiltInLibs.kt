@@ -20,8 +20,8 @@ class BuiltInLibs(val project: Project, dependencies: DependencyHandler) :
 
     fun hilt() {
         implementation("com.google.dagger:hilt-android")
-        add(ap, "com.google.dagger:hilt-android-compiler")
-        add(ap, "androidx.hilt:hilt-compiler")
+        apt("com.google.dagger:hilt-android-compiler")
+        apt("androidx.hilt:hilt-compiler")
     }
 
     fun test() {
@@ -30,7 +30,11 @@ class BuiltInLibs(val project: Project, dependencies: DependencyHandler) :
         androidTestImplementation("androidx.test.espresso:espresso-core")
     }
 
-    private val ap: String by lazy {
+    fun apt(notion: Any) {
+        add(apt, notion)
+    }
+
+    private val apt: String by lazy {
         listOf("ksp", "kapt", "annotationProcessor")
             .first { project.configurations.findByName(it) != null }
     }

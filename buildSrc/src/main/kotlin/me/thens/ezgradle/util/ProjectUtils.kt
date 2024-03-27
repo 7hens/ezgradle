@@ -39,4 +39,6 @@ val Project.isJava: Boolean get() = extensions.findByName("java") != null
 
 val Project.isJavaPlatform: Boolean get() = extensions.findByName("javaPlatform") != null
 
+val Project.isVersionCatalog: Boolean get() = extensions.findByName("catalog") != null
+
 val Project.isRoot: Boolean get() = projectDir == rootDir

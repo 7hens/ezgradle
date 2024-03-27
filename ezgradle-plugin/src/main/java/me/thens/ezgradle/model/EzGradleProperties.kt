@@ -5,6 +5,7 @@ import org.gradle.api.Project
 
 data class EzGradleProperties(
     val bomVersion: String,
+    val enableBom: Boolean,
     val generateBuildConfig: Boolean,
 ) {
 
@@ -12,8 +13,9 @@ data class EzGradleProperties(
         fun from(project: Project): EzGradleProperties {
             return ProjectProperties(project, "ezgradle.").run {
                 EzGradleProperties(
-                    bomVersion = getString("bomVersion") ?: BuildConfig.VERSION,
-                    generateBuildConfig = getBoolean("generateBuildConfig") ?: true,
+                    bomVersion = get("bomVersion") ?: BuildConfig.VERSION,
+                    enableBom = get("enableBom")?.toBoolean() ?: false,
+                    generateBuildConfig = get("generateBuildConfig")?.toBoolean() ?: true,
                 )
             }
         }

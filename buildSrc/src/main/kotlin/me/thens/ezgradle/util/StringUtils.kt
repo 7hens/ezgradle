@@ -32,3 +32,7 @@ fun <E : Enum<E>> String.toEnum(cls: Class<E>): E? {
 inline fun <reified E : Enum<E>> String.toEnum(): E? {
     return toEnum(E::class.java)
 }
+
+fun <E : Enum<E>> String.toEnum(defaultValue: E): E {
+    return toEnum(defaultValue.javaClass) ?: defaultValue
+}
