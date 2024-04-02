@@ -13,6 +13,9 @@ internal fun Project.configureJava() {
         configure<JavaPluginExtension>("java") {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
+            sourceSets.getByName("main") {
+                java.srcDir("build/generated/source/ezgradle/main/java")
+            }
         }
     }
 }

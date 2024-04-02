@@ -10,6 +10,10 @@
 
 ## 2024
 
+### 2024.02.02
+
+- Feature: Update supabase-bom from 1.4.7 to 2.2.2
+
 ### 2024.02.01
 
 - Feature: add `localProject` api

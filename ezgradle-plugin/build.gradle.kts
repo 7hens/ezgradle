@@ -8,7 +8,7 @@ plugins {
 
 sourceSets {
     get("main").apply {
-        kotlin.srcDirs("build/generated/src/main/kotlin")
+        java.srcDirs("build/generated/source/ezgradle/main/java")
         kotlin.srcDirs("../buildSrc/src/main/kotlin")
     }
 }

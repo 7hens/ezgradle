@@ -1,9 +1,10 @@
 import toml
-from common_utils import read_file
+import files
+import strs
 
 
 def read_toml(file_path):
-    return read_file(file_path, toml.load)
+    return files.read(file_path, toml.load)
 
 
 def parse_lib_module(lib_module, toml_data):
@@ -57,3 +58,13 @@ def read_libs_from_toml(input_file):
 
 def lib_accessor(lib_name):
     return lib_name.replace("-", ".")
+
+
+def get_dependency_name(dependency):
+    group, name, _ = dependency.split(":")
+    return f"{strs.camel_case(group)}-{strs.camel_case(name)}"
+
+
+def format_libs(libs_data):
+    libraries = libs_data["libraries"]
+    plugins = libs_data["plugins"]

@@ -20,16 +20,14 @@ run_py() {
 }
 
 run_py_pipenv() {
-  local script="$1"
-  shift
   command -v pipenv >/dev/nul || pip install --user pipenv
   pipenv install > /dev/nul
-  pipenv run python "$script" "$@"
+  pipenv run python "$@"
 }
 
 run_py_venv() {
-    run_venv pip install -r "$repo_dir/requirements.txt" > /dev/nul
-    run_venv python "$repo_dir/src/xpy/main.py" "$@"
+    run_venv pip install -r requirements.txt > /dev/nul
+    run_venv python "$@"
 }
 
 run_venv() {
@@ -37,9 +35,9 @@ run_venv() {
     shift
     local script
     if x_is_win; then
-        script="$repo_dir/.venv/Scripts/$cmd"
+        script=".venv/Scripts/$cmd"
     else
-        script="$repo_dir/.venv/bin/$cmd"
+        script=".venv/bin/$cmd"
     fi
     python -m venv .venv
     chmod +x "$script"
@@ -47,6 +45,9 @@ run_venv() {
 }
 
 run_test() {
+  for f in .devops/test_*.py; do
+    run_py "$f" "$@"
+  done
   run_publish
   run_test_samples
 }

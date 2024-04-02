@@ -28,7 +28,8 @@ fun <T> Project.configure(name: String, fn: T.() -> Unit) {
 }
 
 fun Project.getDefaultPackageName(): String {
-    return "$group.$name".toPackageName()
+    val groupName = group.toString().takeIf { it.isNotBlank() } ?: "dev.${rootProject.name}"
+    return "$groupName.$name".toPackageName()
 }
 
 fun Project.hasConfiguration(name: String): Boolean = configurations.findByName(name) != null

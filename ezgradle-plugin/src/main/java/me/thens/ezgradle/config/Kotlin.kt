@@ -10,7 +10,7 @@ internal fun Project.configureKotlin() {
     if (extensions.findByName("kotlin") != null) {
         configure<KotlinProjectExtension>("kotlin") {
             sourceSets.getByName("main") {
-                kotlin.srcDir("build/generated/src/main/kotlin")
+//                kotlin.srcDir("build/generated/source/ezgradle/main/java")
             }
             jvmToolchain(17)
         }

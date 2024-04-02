@@ -21,32 +21,33 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
     @get:OutputFile
     abstract val outputFile: RegularFileProperty
 
-    init {
-        packageName.convention(project.getDefaultPackageName())
-        outputFile.convention {
-            val packageDir = packageName.get().replace('.', '/')
-            val outputDir = project.file(OUTPUT_DIR)
-            File(outputDir, "$packageDir/$CLASS_NAME.kt")
-        }
-    }
-
     @Input
     fun getBuildConfigProps(): Map<String, Any> {
         return getProperties(project)
     }
 
+    private fun initProperties() {
+        packageName.convention(project.getDefaultPackageName())
+        outputFile.convention {
+            val packageDir = packageName.get().replace('.', '/')
+            val outputDir = project.file(OUTPUT_DIR)
+            File(outputDir, "$packageDir/$CLASS_NAME.java")
+        }
+    }
+
     @TaskAction
     fun generateBuildConfig() {
+        initProperties()
         val fields = getBuildConfigProps().entries.joinToString("\n   ") {
-            "const val ${it.key} = \"${it.value}\""
+            "public static final String ${it.key} = \"${it.value}\";"
         }
         outputFile.get().asFile.apply {
             parentFile?.mkdirs()
             writeText(
                 """
-                |package ${packageName.get()}
+                |package ${packageName.get()};
                 |
-                |object $CLASS_NAME {
+                |public class $CLASS_NAME {
                 |   $fields
                 |}
                 """.trimMargin("|")
@@ -55,7 +56,7 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
     }
 
     companion object {
-        private const val OUTPUT_DIR = "build/generated/src/main/kotlin"
+        private const val OUTPUT_DIR = "build/generated/source/ezgradle/main/java"
         private const val TASK_NAME = "generateBuildConfig"
         private const val CLASS_NAME = "BuildConfig"
 
