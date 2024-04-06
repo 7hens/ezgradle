@@ -2,17 +2,6 @@ package me.thens.ezgradle.util
 
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtraPropertiesExtension
-import org.gradle.kotlin.dsl.extra
-
-fun Project.loadProperties(path: String) {
-    val properties = java.util.Properties()
-    listOf(rootProject.file(path), project.file(path)).forEach { file ->
-        if (file.exists()) {
-            properties.load(file.inputStream())
-        }
-    }
-    properties.forEach { key, value -> extra[key.toString()] = value }
-}
 
 @Suppress("UNCHECKED_CAST")
 fun <T> ExtraPropertiesExtension.getOrElse(name: String, defaultVal: () -> T): T {

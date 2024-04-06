@@ -1,34 +1,13 @@
-//import me.thens.ezgradle.util.GenerateBuildConfigTask
+import me.thens.ezgradle.util.GenerateBuildConfigTask
 
 plugins {
     `kotlin-dsl`
-    id("java-gradle-plugin")
-    id("maven-publish")
 }
 
 sourceSets {
     get("main").apply {
         java.srcDirs("build/generated/source/ezgradle/main/java")
         kotlin.srcDirs("../buildSrc/src/main/kotlin")
-    }
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("pluginMaven") {
-            version = project.version.toString()
-            from(components.getByName("java"))
-        }
-    }
-}
-
-gradlePlugin {
-    isAutomatedPublishing = false
-    plugins {
-        register("ezgradle") {
-            id = "com.github.7hens.ezgradle"
-            implementationClass = "me.thens.ezgradle.EzGradlePlugin"
-        }
     }
 }
 
@@ -42,17 +21,25 @@ dependencies {
 
     implementation(gradleApi())
     implementation(localGroovy())
+    implementation(project(":com.github.7hens.ezgradle.gradle.plugin"))
     implementation(libs.plugins.android.application.plugin())
     implementation(libs.plugins.android.library.plugin())
     implementation(libs.plugins.kotlin.jvm.plugin())
     implementation(libs.plugins.kotlin.android.plugin())
     implementation(libs.plugins.kotlin.serialization.plugin())
 //    implementation(libs.plugins.kotlin.parcelize.plugin())
-    implementation(libs.plugins.dagger.hilt.android.plugin())
-    implementation(libs.plugins.ksp.plugin())
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.tomlj)
     testImplementation(libs.junit)
 }
 
-//GenerateBuildConfigTask.register(project)
+GenerateBuildConfigTask.register(project)
+
+tasks.getByName<Test>("test") {
+    testLogging {
+        showStandardStreams = true
+//        events("standardOut", "passed", "failed")
+        events("standardOut")
+    }
+}

@@ -7,6 +7,7 @@ activity = "1.8.2"
 robolectric-android = "14-robolectric-10818077"
 appcompat = "1.6.1"
 core = "1.12.0"
+tomlj = "1.1.1"
 work = "2.9.0"
 window-extensions = "1.0.0"
 window = "1.2.0"
@@ -118,6 +119,7 @@ robolectric-android = { module = "org.robolectric:android-all", version.ref = "r
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
 appcompat-resources = { module = "androidx.appcompat:appcompat-resources", version.ref = "appcompat" }
+tomlj = { module = "org.tomlj:tomlj", version.ref = "tomlj" }
 work-multiprocess3 = { module = "androidx.work:work-multiprocess", version.ref = "work" }
 work-testing3 = { module = "androidx.work:work-testing", version.ref = "work" }
 work-gcm3 = { module = "androidx.work:work-gcm", version.ref = "work" }

@@ -11,7 +11,7 @@ data class EzGradleProperties(
 
     companion object {
         fun from(project: Project): EzGradleProperties {
-            return ProjectProperties(project, "ezgradle.").run {
+            return ProjectProperties.from(project).with("ezgradle.").run {
                 EzGradleProperties(
                     bomVersion = get("bomVersion") ?: BuildConfig.VERSION,
                     enableBom = get("enableBom")?.toBoolean() ?: false,

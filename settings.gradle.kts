@@ -25,6 +25,7 @@ dependencyResolutionManagement {
 rootProject.name = "ezgradle"
 include(":ezgradle-bom")
 include(":ezgradle-catalog")
+include(":ezgradle-run")
 include(":ezgradle-plugin")
 project(":ezgradle-plugin").name = "com.github.7hens.ezgradle.gradle.plugin"
 

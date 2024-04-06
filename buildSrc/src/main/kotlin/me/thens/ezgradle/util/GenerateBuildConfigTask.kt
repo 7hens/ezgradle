@@ -37,7 +37,6 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
 
     @TaskAction
     fun generateBuildConfig() {
-        initProperties()
         val fields = getBuildConfigProps().entries.joinToString("\n   ") {
             "public static final String ${it.key} = \"${it.value}\";"
         }
@@ -62,7 +61,8 @@ abstract class GenerateBuildConfigTask : DefaultTask() {
 
         fun register(project: Project) {
             project.afterEvaluate {
-                tasks.register<GenerateBuildConfigTask>(TASK_NAME).apply {
+                tasks.register<GenerateBuildConfigTask>(TASK_NAME) {
+                    initProperties()
                     project.tasks.filter { it.name.startsWith("compile") && it.name.contains("Kotlin") }
                         .forEach { it.dependsOn(this) }
                 }

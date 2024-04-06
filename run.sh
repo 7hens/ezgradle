@@ -44,6 +44,11 @@ run_venv() {
     "$script" "$@"
 }
 
+run_ezgradle() {
+  local test_name="me.thens.ezgradle.EzGradleRunTest.run"
+  EZGRADLE_ARGS="$*" ./gradlew :ezgradle-run:test --tests "$test_name" --rerun
+}
+
 run_test() {
   for f in .devops/test_*.py; do
     run_py "$f" "$@"
