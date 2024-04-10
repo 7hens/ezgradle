@@ -1,14 +1,5 @@
-import me.thens.ezgradle.util.GenerateBuildConfigTask
-
 plugins {
     `kotlin-dsl`
-}
-
-sourceSets {
-    get("main").apply {
-        java.srcDirs("build/generated/source/ezgradle/main/java")
-        kotlin.srcDirs("../buildSrc/src/main/kotlin")
-    }
 }
 
 fun Provider<PluginDependency>.plugin(): Provider<String> {
@@ -33,8 +24,6 @@ dependencies {
     implementation(libs.tomlj)
     testImplementation(libs.junit)
 }
-
-GenerateBuildConfigTask.register(project)
 
 tasks.getByName<Test>("test") {
     testLogging {

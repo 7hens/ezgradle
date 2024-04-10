@@ -29,6 +29,7 @@ dependencies {
         api(libs.appcompat)
         api(libs.core.ktx)
         api(libs.appcompat.resources)
+        api(libs.tomlj)
         api(libs.work.multiprocess3)
         api(libs.work.testing3)
         api(libs.work.gcm3)
@@ -83,6 +84,7 @@ dependencies {
         api(libs.navigation.compose)
         api(libs.lifecycle.viewmodel.savedstate)
         api(libs.lifecycle.viewmodel.ktx)
+        api(libs.lifecycle.viewmodel.ktx2)
         api(libs.lifecycle.viewmodel.compose)
         api(libs.lifecycle.service)
         api(libs.lifecycle.runtime.ktx)
@@ -218,6 +220,7 @@ dependencies {
         api(libs.plugins.secretes.plugin())
         api(libs.plugins.ksp.plugin())
         api(libs.plugins.dagger.hilt.android.plugin())
+        api(libs.plugins.ezgradle.plugin())
     }
 //#LIBS_END
 }
@@ -230,5 +233,3 @@ publishing {
         }
     }
 }
-
-tasks.registerLogDependencies()

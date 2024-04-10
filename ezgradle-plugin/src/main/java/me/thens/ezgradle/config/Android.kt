@@ -3,8 +3,7 @@ package me.thens.ezgradle.config
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
-import com.github.a7hens.ezgradle.com.github.a7hens.ezgradle.gradle.plugin.BuildConfig
-import me.thens.ezgradle.util.GenerateBuildConfigTask
+import me.thens.ezgradle.model.EzGradleProperties
 import me.thens.ezgradle.util.configure
 import me.thens.ezgradle.util.getDefaultPackageName
 import me.thens.ezgradle.util.toVersionCode
@@ -33,39 +32,42 @@ internal fun Project.androidApplication(block: ApplicationExtension.() -> Unit) 
     }
 }
 
-internal fun Project.configureAndroidApplication() {
+internal fun Project.configureAndroidApplication(properties: EzGradleProperties) {
     androidApplication {
-        configureAndroidCommon(this)
+        configureAndroidCommon(this, properties)
         defaultConfig {
             val version = project.version.toString()
             applicationId = namespace
-            targetSdk = BuildConfig.ANDROID_TARGET_SDK.toInt()
+            targetSdk = properties.libs.versions.androidTargetSdk.toInt()
             versionCode = version.toVersionCode()
             versionName = version
         }
     }
 }
 
-internal fun Project.configureAndroidLibrary() {
+internal fun Project.configureAndroidLibrary(properties: EzGradleProperties) {
     androidLibrary {
-        configureAndroidCommon(this)
+        configureAndroidCommon(this, properties)
         defaultConfig {
             consumerProguardFiles("consumer-rules.pro")
         }
     }
 }
 
-private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
+private fun Project.configureAndroidCommon(
+    android: AndroidCommonExtension,
+    properties: EzGradleProperties
+) {
     android.apply {
         namespace = getDefaultPackageName()
-        compileSdk = BuildConfig.ANDROID_TARGET_SDK.toInt()
+        compileSdk = properties.libs.versions.androidTargetSdk.toInt()
         defaultConfig {
-            minSdk = BuildConfig.ANDROID_MIN_SDK.toInt()
+            minSdk = properties.libs.versions.androidMinSdk.toInt()
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             vectorDrawables {
                 useSupportLibrary = true
             }
-            GenerateBuildConfigTask.getProperties(project).entries.forEach { (key, value) ->
+            BuildConfigGenerator(project).getProperties().entries.forEach { (key, value) ->
                 buildConfigField("String", key, "\"$value\"")
                 manifestPlaceholders[key] = value
             }
@@ -85,7 +87,7 @@ private fun Project.configureAndroidCommon(android: AndroidCommonExtension) {
             buildConfig = true
         }
         composeOptions {
-            kotlinCompilerExtensionVersion = BuildConfig.COMPOSE_COMPILER_VERSION
+            kotlinCompilerExtensionVersion = properties.libs.versions.composeCompiler
         }
         packaging {
             resources {

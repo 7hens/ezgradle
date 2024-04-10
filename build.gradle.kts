@@ -2,7 +2,7 @@
 
 plugins {
     if (System.getenv("EXCLUDES_SAMPLES") != "true") {
-        id("com.github.7hens.ezgradle") version "-SNAPSHOT"
+        alias(libs.plugins.ezgradle)
     }
 }
 

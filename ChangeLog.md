@@ -10,6 +10,11 @@
 
 ## 2024
 
+### 2024.03.01
+
+- Feature: Experimental for version catalog
+- Refactor: Generate BuildConfig.java instead of BuildConfig.kt
+
 ### 2024.02.02
 
 - Feature: Update supabase-bom from 1.4.7 to 2.2.2

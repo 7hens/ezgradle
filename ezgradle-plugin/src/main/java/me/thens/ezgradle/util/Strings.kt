@@ -36,3 +36,30 @@ inline fun <reified E : Enum<E>> String.toEnum(): E? {
 fun <E : Enum<E>> String.toEnum(defaultValue: E): E {
     return toEnum(defaultValue.javaClass) ?: defaultValue
 }
+
+fun String.capitalize(): String {
+    return replaceFirstChar { it.uppercase() }
+}
+
+fun String.decaptitalize(): String {
+    return replaceFirstChar { it.lowercase() }
+}
+
+fun String.pascalCase(): String {
+    return split(Regex("[^A-Za-z0-9]"))
+        .joinToString("") { it.capitalize() }
+}
+
+fun String.camelCase(): String {
+    return pascalCase().decaptitalize()
+}
+
+fun String.toCatalogAlias(): String {
+    val (group, name) = split(":")
+    return "${group.camelCase()}_${name.camelCase()}"
+}
+
+fun String.replaceRegion(content: String, start: String, end: String): String {
+    val pattern = "($start)[\\w\\W]*?($end)"
+    return Regex(pattern).replace(this, "\$1$content\$2")
+}

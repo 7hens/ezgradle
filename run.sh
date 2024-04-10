@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+PYTHON_VENV=pipenv
+
 main() {
   set -e
   local cmd="$1"
@@ -16,7 +18,7 @@ main() {
 }
 
 run_py() {
-  run_py_pipenv "$@"
+  run_py_$PYTHON_VENV "$@"
 }
 
 run_py_pipenv() {
@@ -44,13 +46,30 @@ run_venv() {
     "$script" "$@"
 }
 
+run_pip() {
+  run_pip_$PYTHON_VENV "$@"
+}
+
+run_pip_pipenv() {
+  pipenv "$@"
+}
+
+run_pip_venv() {
+  run_venv pip "$@"
+  if [ "$1" = install ]; then
+    run_ven pip feeze > requirements.txt
+  fi
+}
+
 run_ezgradle() {
   local test_name="me.thens.ezgradle.EzGradleRunTest.run"
   EZGRADLE_ARGS="$*" ./gradlew :ezgradle-run:test --tests "$test_name" --rerun
 }
 
 run_test() {
+  run_refresh
   for f in .devops/test_*.py; do
+    test -e "$f" || continue
     run_py "$f" "$@"
   done
   run_publish
@@ -65,16 +84,35 @@ run_publish() {
   rm -rf "$repo_dir"
   ./gradlew --stop
   EXCLUDES_SAMPLES=true ./gradlew clean projects \
-    -Pversion=-SNAPSHOT -xtest publishToMavenLocal --stacktrace
-  ls -d $repo_dir/$group.gradle.plugin*
-  ls -d $repo_dir/ezgradle-bom*
+    -xtest publishToMavenLocal --stacktrace
+  ls -d $repo_dir/*/*
   printf "Elapsed Time: %dm %ds\n" $((SECONDS / 60)) $((SECONDS % 60))
 }
 
 run_test_samples() {
   echo "Assemble samples"
-  MODULES='*' ./gradlew projects assemble -Pversion=-SNAPSHOT
+  MODULES='*' ./gradlew projects assemble -Pversion=-SNAPSHOT --stacktrace
   printf "Elapsed Time: %dm %ds\n" $((SECONDS / 60)) $((SECONDS % 60))
+}
+
+run_refresh() {
+  local toml=gradle/libs.versions.toml
+  local ezgradle_libs=ezgradle-plugin/src/main/java/me/thens/ezgradle/model/EzGradleLibs.kt
+  local ezgradle
+  ezgradle="$(grep 'version=' gradle.properties | cut -d '=' -f2)"
+  sed -i'' -e "s/\\(ezgradle = \"\\).*/\\1$ezgradle\"/" $toml
+  sed -i'' -e "s/\\(val ezgradle: String = \\).*/\\1\"$ezgradle\",/" $ezgradle_libs
+#  sed -i'' -e "s/\\(ezgradle\". version \\).*/\\1\"$ezgradle\"/" build.gradle.kts
+  local android_min_sdk
+  local android_target_sdk
+  local compose_compiler
+  android_min_sdk="$(grep 'androidMinSdk' $toml | head -1 | cut -d '=' -f2)"
+  android_target_sdk="$(grep 'androidTargetSdk' $toml | head -1 | cut -d '=' -f2)"
+  compose_compiler="$(grep 'composeCompiler' $toml | head -1 | cut -d '=' -f2)"
+  sed -i'' -e "s/\\(val androidMinSdk: String =\\).*/\\1$android_min_sdk,/" $ezgradle_libs
+  sed -i'' -e "s/\\(val androidTargetSdk: String =\\).*/\\1$android_target_sdk,/" $ezgradle_libs
+  sed -i'' -e "s/\\(val composeCompiler: String =\\).*/\\1$compose_compiler,/" $ezgradle_libs
+  main update_bom
 }
 
 gradle_has_task() {

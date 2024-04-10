@@ -1,10 +1,49 @@
+import os
+import re
 import toml
-import files
-import strs
+
+def replace_region(text, subtext, start, end):
+    pattern = re.escape(start) + r"(.*?)" + re.escape(end)
+    replacement = f"{start}\n{subtext}\n{end}"
+    return re.sub(pattern, replacement, text, flags=re.DOTALL)
+
+def pascal_case(text):
+    words = re.split(r'[A-Za-z0-9]', text)
+    return ''.join(word.capitalize() for word in words)
+
+def camel_case(text):
+    pascal_text = pascal_case(text)
+    if not pascal_text:
+        return ''
+    return pascal_case[0].lower() + pascal_case[1:]
+
+def split_list(list, filter):
+    filter_in = []
+    filter_out = []
+    for element in list:
+        if filter(element):
+            filter_in.append(element)
+        else:
+            filter_out.append(element)
+    return filter_in, filter_out
+
+
+def use_file(filename, mode, fn):
+    file_path = os.path.join(os.path.dirname(__file__), filename)
+    with open(file_path, mode) as file:
+        return fn(file)
+
+
+def read_file(filename, fn=lambda f: f.read()):
+    return use_file(filename, "r", fn)
+
+
+def write_file(filename, text):
+    use_file(filename, "w", lambda f: f.write(text))
 
 
 def read_toml(file_path):
-    return files.read(file_path, toml.load)
+    return read_file(file_path, toml.load)
 
 
 def parse_lib_module(lib_module, toml_data):
@@ -62,9 +101,5 @@ def lib_accessor(lib_name):
 
 def get_dependency_name(dependency):
     group, name, _ = dependency.split(":")
-    return f"{strs.camel_case(group)}-{strs.camel_case(name)}"
+    return f"{camel_case(group)}-{camel_case(name)}"
 
-
-def format_libs(libs_data):
-    libraries = libs_data["libraries"]
-    plugins = libs_data["plugins"]
