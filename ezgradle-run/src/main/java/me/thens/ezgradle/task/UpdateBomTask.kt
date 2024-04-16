@@ -10,9 +10,9 @@ class UpdateBomTask : NamedEzGradleTask {
     override fun run(argv: List<String>) {
         val props = TaskProps()
         val tomlData = Toml.parse(props.tomlPath)
-        val libs = tomlData.getTable("libraries")?.keySet() ?: emptySet()
+        val libraries = tomlData.getTable("libraries")?.keySet() ?: emptySet()
         val plugins = tomlData.getTable("plugins")?.keySet() ?: emptySet()
-        val (bomLibs, nonBomLibs) = libs.partition { it.endsWith("bom", ignoreCase = true) }
+        val (bomLibs, nonBomLibs) = libraries.partition { it.endsWith("bom", ignoreCase = true) }
         val content = sequence {
             val ind = "    "
             yieldAll(bomLibs.map { "${ind}api(platform(libs.${libAccessor(it)}))" })

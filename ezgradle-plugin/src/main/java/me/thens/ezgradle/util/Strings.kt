@@ -55,8 +55,11 @@ fun String.camelCase(): String {
 }
 
 fun String.toCatalogAlias(): String {
+    if (!contains(":")) {
+        return camelCase()
+    }
     val (group, name) = split(":")
-    return "${group.camelCase()}_${name.camelCase()}"
+    return "${group.camelCase()}-${name.camelCase()}"
 }
 
 fun String.replaceRegion(content: String, start: String, end: String): String {

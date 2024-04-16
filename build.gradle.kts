@@ -2,7 +2,7 @@
 
 plugins {
     if (System.getenv("EXCLUDES_SAMPLES") != "true") {
-        alias(libs.plugins.ezgradle)
+        alias(libs.plugins.comGithub7hensEzgradle)
     }
 }
 

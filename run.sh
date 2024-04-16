@@ -7,11 +7,11 @@ main() {
   local cmd="$1"
   shift
   local run_cmd="run_$cmd"
-  local py_file=".devops/$cmd.py"
+  local py_file=".devops/run.py"
   if [ "$(type -t "$run_cmd")" = function ]; then
     "$run_cmd" "$@"
   elif [ -f "$py_file" ]; then
-    run_py "$py_file" "$@"
+    run_py "$py_file" "$cmd" "$@"
   else
     echo "Unrecognized command: $*"
   fi
