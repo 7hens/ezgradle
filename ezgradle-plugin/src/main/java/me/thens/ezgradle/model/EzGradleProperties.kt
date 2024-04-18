@@ -17,6 +17,7 @@ data class EzGradleProperties(
 ) {
 
     companion object {
+        const val GENERATED_DIR = "build/generated/source/ezgradle/main/java"
         private const val PROP_KEY = "EZGRADLE_PROPERTIES"
 
         fun from(project: Project): EzGradleProperties {

@@ -1,13 +1,23 @@
 package me.thens.ezgradle.util
 
 import org.gradle.api.Project
+import org.gradle.api.model.ObjectFactory
 import org.gradle.api.plugins.ExtraPropertiesExtension
+import org.gradle.api.provider.MapProperty
+import org.gradle.kotlin.dsl.mapProperty
 import java.io.File
 import java.util.Properties
 
 val Project.isIncludedBuild: Boolean
     get() {
-        return name == "buildSrc" || gradle.includedBuilds.any { it.name == name }
+        if (name == "buildSrc") {
+            return true
+        }
+        return try {
+            gradle.includedBuilds.any { it.name == name }
+        } catch (_: Exception) {
+            return false
+        }
     }
 
 val Project.globalRootDir: File
@@ -57,4 +67,8 @@ val Project.isRoot: Boolean get() = projectDir == rootDir
 
 fun Project.libVersion(name: String): String {
     TODO()
+}
+
+inline fun <reified K, reified V> ObjectFactory.mapProperties(map: Map<K, V>): MapProperty<K, V> {
+    return mapProperty<K, V>().apply { putAll(map) }
 }
