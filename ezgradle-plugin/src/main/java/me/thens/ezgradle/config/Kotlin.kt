@@ -21,6 +21,7 @@ internal fun Project.configureKapt() {
     if (plugins.hasPlugin(kotlin("kapt"))) {
         configure<KaptExtension>("kapt") {
             correctErrorTypes = true
+            useBuildCache = true
         }
     }
 }

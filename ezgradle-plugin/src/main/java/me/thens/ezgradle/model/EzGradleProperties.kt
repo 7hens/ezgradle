@@ -1,5 +1,6 @@
 package me.thens.ezgradle.model
 
+import dev.horizona.core.log.LogLevel
 import me.thens.ezgradle.util.getOrPut
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
@@ -9,6 +10,7 @@ import org.gradle.kotlin.dsl.getByType
 import kotlin.jvm.optionals.getOrNull
 
 data class EzGradleProperties(
+    val logLevel: LogLevel,
     val libsName: String,
     val enableBom: Boolean,
     val generateBuildConfig: Boolean,
@@ -30,6 +32,7 @@ data class EzGradleProperties(
                 val versionCatalogs = project.extensions.getByType<VersionCatalogsExtension>()
                 val versionCatalog = versionCatalogs.find(libsName).getOrNull()
                 EzGradleProperties(
+                    logLevel = getEnum("logLevel", LogLevel.INFO),
                     libsName = libsName,
                     enableBom = get("enableBom")?.toBoolean() ?: true,
                     generateBuildConfig = get("generateBuildConfig")?.toBoolean() ?: true,

@@ -1,5 +1,6 @@
 package me.thens.ezgradle
 
+import dev.horizona.core.log.LogFilter
 import me.thens.ezgradle.config.BuildConfigGenerator
 import me.thens.ezgradle.config.configureAndroidApplication
 import me.thens.ezgradle.config.configureAndroidLibrary
@@ -10,6 +11,8 @@ import me.thens.ezgradle.config.configureKapt
 import me.thens.ezgradle.config.configureKotlin
 import me.thens.ezgradle.config.configureMavenPublish
 import me.thens.ezgradle.lib.EzGradleBomManager
+import me.thens.ezgradle.log.InternalLogger
+import me.thens.ezgradle.log.log
 import me.thens.ezgradle.model.EzGradleProperties
 import me.thens.ezgradle.util.isAndroid
 import me.thens.ezgradle.util.isJava
@@ -19,6 +22,10 @@ import org.gradle.api.Project
 class EzGradlePlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val ezgradleProperties = EzGradleProperties.from(target)
+        InternalLogger.update {
+            copy(printer = printer.filter(LogFilter.minLevel(ezgradleProperties.logLevel)))
+        }
+        log.debug { ezgradleProperties.toString() }
         target.configure(ezgradleProperties)
     }
 

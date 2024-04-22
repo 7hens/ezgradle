@@ -22,7 +22,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ezgradle"
+//rootProject.name = "ezgradle"
 include(":ezgradle-bom")
 include(":ezgradle-catalog")
 include(":ezgradle-run")

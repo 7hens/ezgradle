@@ -66,3 +66,18 @@ fun String.replaceRegion(content: String, start: String, end: String): String {
     val pattern = "($start)[\\w\\W]*?($end)"
     return Regex(pattern).replace(this, "\$1$content\$2")
 }
+
+fun String.ellipseIfTooLong(
+    ellipse: String = "...",
+    headLength: Int = 1000,
+    tailLength: Int = 20,
+): String {
+    if (length <= headLength + ellipse.length + tailLength) {
+        return this
+    }
+    return StringBuilder()
+        .append(substring(0, headLength))
+        .append(ellipse)
+        .append(length - tailLength)
+        .toString()
+}

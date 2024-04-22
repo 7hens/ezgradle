@@ -16,10 +16,16 @@ data class ProjectProperties(
 
     operator fun get(name: String): String? {
         val key = "$prefix$name"
-        return System.getenv(key.toEnvName())
-            ?: System.getProperty(key)
-            ?: properties[key]
-            ?: project.findProperty(key)?.toString()
+        val envName = key.toEnvName()
+        return System.getenv(envName) ?: listOf(key, envName)
+            .flatMap {
+                listOfNotNull(
+                    System.getProperty(it),
+                    properties[it],
+                    project.findProperty(it)?.toString(),
+                )
+            }
+            .firstOrNull()
     }
 
     fun getValue(name: String): String {
