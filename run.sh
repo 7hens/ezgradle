@@ -67,7 +67,6 @@ run_ezgradle() {
 }
 
 run_test() {
-  run_refresh
   for f in .devops/test_*.py; do
     test -e "$f" || continue
     run_py "$f" "$@"
@@ -77,6 +76,7 @@ run_test() {
 }
 
 run_publish() {
+  run_refresh
   echo "Run task :publishToMavenLocal"
   local group=com.github.7hens.ezgradle
   local repo_dir=~/.m2/repository/${group//.//}

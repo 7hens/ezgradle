@@ -25,7 +25,7 @@ data class EzGradleLibs(
     data class Versions(
         val androidMinSdk: String = "21",
         val androidTargetSdk: String = "34",
-        val composeCompiler: String = "1.5.5",
+        val composeCompiler: String = "1.5.8",
         val ezgradle: String = "2024.03.01-SNAPSHOT",
     )
 }
