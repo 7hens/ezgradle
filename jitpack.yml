@@ -5,6 +5,6 @@ jdk:
 #install:
 #  - echo "Running a custom install command"
 #  - chmod +x ./gradlew
-#  - ./gradlew clean -Pgroup=com.github.7hens.ezgradle -Pversion=$VERSION -xtest -xlint publishToMavenLocal
+#  - ./gradlew clean -Pgroup=com.gitlab.7hens.ezgradle -Pversion=$VERSION -xtest -xlint publishToMavenLocal
 env:
   EXCLUDES_SAMPLES: true

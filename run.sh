@@ -78,7 +78,7 @@ run_test() {
 run_publish() {
   run_refresh
   echo "Run task :publishToMavenLocal"
-  local group=com.github.7hens.ezgradle
+  local group=com.gitlab.7hens.ezgradle
   local repo_dir=~/.m2/repository/${group//.//}
   rm -rf ~/.gradle/caches/modules*/files*/$group*
   rm -rf "$repo_dir"

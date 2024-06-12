@@ -12,7 +12,7 @@ dependencies {
 
     implementation(gradleApi())
     implementation(localGroovy())
-    implementation(project(":com.github.7hens.ezgradle.gradle.plugin"))
+    implementation(project(":com.gitlab.7hens.ezgradle.gradle.plugin"))
     implementation(libs.plugins.comAndroidApplication.plugin())
     implementation(libs.plugins.comAndroidLibrary.plugin())
     implementation(libs.plugins.orgJetbrainsKotlinJvm.plugin())

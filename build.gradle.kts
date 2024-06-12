@@ -7,7 +7,6 @@ plugins {
 }
 
 allprojects {
-    group = "com.github.7hens.ezgradle"
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
     }
