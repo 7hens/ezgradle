@@ -211,7 +211,7 @@ dependencies {
         api(libs.plugins.androidxBenchmark.plugin())
         api(libs.plugins.comAndroidApplication.plugin())
         api(libs.plugins.comAndroidLibrary.plugin())
-        api(libs.plugins.comGithub7hensEzgradle.plugin())
+        api(libs.plugins.comGitlab7hensEzgradle.plugin())
         api(libs.plugins.comGoogleAndroidLibrariesMapsplatformSecretsGradlePlugin.plugin())
         api(libs.plugins.comGoogleDaggerHiltAndroid.plugin())
         api(libs.plugins.comGoogleDevtoolsKsp.plugin())

@@ -26,7 +26,7 @@ gradlePlugin {
     isAutomatedPublishing = false
     plugins {
         register("ezgradle") {
-            id = "com.github.7hens.ezgradle"
+            id = "com.gitlab.7hens.ezgradle"
             implementationClass = "me.thens.ezgradle.EzGradlePlugin"
         }
     }

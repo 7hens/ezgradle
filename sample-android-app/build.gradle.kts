@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("com.github.7hens.ezgradle")
+    id("com.gitlab.7hens.ezgradle")
 }
 
 android {

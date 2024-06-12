@@ -17,7 +17,7 @@ class EzGradleBomManager(val project: Project) {
     }
 
     companion object {
-        private const val GROUP: String = "com.github.7hens.ezgradle"
+        private const val GROUP: String = "com.gitlab.7hens.ezgradle"
         private const val EZGRADLE_BOM = "ezgradle-bom"
 
         private val configurations = listOf(

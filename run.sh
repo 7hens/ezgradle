@@ -22,13 +22,13 @@ run_py() {
 }
 
 run_py_pipenv() {
-  command -v pipenv >/dev/nul || pip install --user pipenv
-  pipenv install > /dev/nul
+  command -v pipenv >/dev/null || pip install --user pipenv
+  pipenv install > /dev/null
   pipenv run python "$@"
 }
 
 run_py_venv() {
-    run_venv pip install -r requirements.txt > /dev/nul
+    run_venv pip install -r requirements.txt > /dev/null
     run_venv python "$@"
 }
 

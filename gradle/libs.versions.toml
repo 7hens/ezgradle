@@ -316,7 +316,7 @@ orgTomlj-tomlj = { module = "org.tomlj:tomlj", version.ref = "tomlj" }
 androidxBenchmark = { id = "androidx.benchmark", version = "1.2.2" }
 comAndroidApplication = { id = "com.android.application", version.ref = "agp" }
 comAndroidLibrary = { id = "com.android.library", version.ref = "agp" }
-comGithub7hensEzgradle = { id = "com.github.7hens.ezgradle", version.ref = "ezgradle" }
+comGitlab7hensEzgradle = { id = "com.gitlab.7hens.ezgradle", version.ref = "ezgradle" }
 comGoogleAndroidLibrariesMapsplatformSecretsGradlePlugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version = "2.0.1" }
 comGoogleDaggerHiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
