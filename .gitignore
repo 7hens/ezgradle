@@ -9,3 +9,5 @@ __local/
 .externalNativeBuild
 .cxx
 local.properties
+.venv/
+.vscode/

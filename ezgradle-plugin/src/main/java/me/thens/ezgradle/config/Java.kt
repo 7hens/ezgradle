@@ -1,5 +1,6 @@
 package me.thens.ezgradle.config
 
+import me.thens.ezgradle.model.EzGradleProperties
 import me.thens.ezgradle.util.configure
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -13,6 +14,9 @@ internal fun Project.configureJava() {
         configure<JavaPluginExtension>("java") {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
+            sourceSets.getByName("main") {
+                java.srcDir(EzGradleProperties.GENERATED_DIR)
+            }
         }
     }
 }

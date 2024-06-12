@@ -2,12 +2,11 @@
 
 plugins {
     if (System.getenv("EXCLUDES_SAMPLES") != "true") {
-        id("com.github.7hens.ezgradle") version "-SNAPSHOT"
+        alias(libs.plugins.comGithub7hensEzgradle)
     }
 }
 
 allprojects {
-    group = "com.github.7hens.ezgradle"
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
     }

@@ -5,6 +5,7 @@ import me.thens.ezgradle.util.isAndroid
 import me.thens.ezgradle.util.isJava
 import me.thens.ezgradle.util.isJavaPlatform
 import me.thens.ezgradle.util.isRoot
+import me.thens.ezgradle.util.isVersionCatalog
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
@@ -15,6 +16,7 @@ internal fun Project.configureMavenPublish() {
         when {
             isAndroid -> configureMavenPublish("assembleRelease", "release")
             isJavaPlatform -> configureMavenPublish("assemble", "javaPlatform")
+            isVersionCatalog -> configureMavenPublish("assemble", "versionCatalog")
             isJava -> configureMavenPublish("assemble", "java")
             else -> Unit
         }

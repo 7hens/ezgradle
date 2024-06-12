@@ -1,4 +1,4 @@
-import me.thens.ezgradle.util.GenerateBuildConfigTask
+//import me.thens.ezgradle.util.GenerateBuildConfigTask
 
 plugins {
     `kotlin-dsl`
@@ -8,7 +8,7 @@ plugins {
 
 sourceSets {
     get("main").apply {
-        kotlin.srcDirs("build/generated/src/main/kotlin")
+        java.srcDirs("build/generated/source/ezgradle/main/java")
         kotlin.srcDirs("../buildSrc/src/main/kotlin")
     }
 }
@@ -32,25 +32,27 @@ gradlePlugin {
     }
 }
 
-dependencies {
-    fun plugin(id: String) = "$id:$id.gradle.plugin"
-    fun kotlin(name: String) = "org.jetbrains.kotlin.$name"
-
-    implementation(platform(project(":ezgradle-bom")))
-    implementation(plugin("com.android.application"))
-    implementation(plugin("com.android.library"))
-    implementation(plugin(kotlin("jvm")))
-    implementation(plugin(kotlin("android")))
-    implementation(plugin(kotlin("plugin.serialization")))
-    implementation(plugin(kotlin("plugin.parcelize")))
-    implementation(plugin("com.google.dagger.hilt.android"))
-    implementation(plugin("com.google.devtools.ksp"))
-    implementation(gradleApi())
-    implementation(localGroovy())
-
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
-    testImplementation("junit:junit")
+fun Provider<PluginDependency>.plugin(): Provider<String> {
+    return map { it.run { "$pluginId:$pluginId.gradle.plugin:$version" } }
 }
 
-GenerateBuildConfigTask.register(project)
+dependencies {
+//    fun plugin(id: String) = "$id:$id.gradle.plugin"
+//    fun kotlin(name: String) = "org.jetbrains.kotlin.$name"
+
+    implementation(gradleApi())
+    implementation(localGroovy())
+    implementation(libs.plugins.comAndroidApplication.plugin())
+    implementation(libs.plugins.comAndroidLibrary.plugin())
+    implementation(libs.plugins.orgJetbrainsKotlinJvm.plugin())
+    implementation(libs.plugins.orgJetbrainsKotlinAndroid.plugin())
+    implementation(libs.plugins.orgJetbrainsKotlinPluginSerialization.plugin())
+//    implementation(libs.plugins.kotlin.parcelize.plugin())
+    implementation(libs.plugins.comGoogleDaggerHiltAndroid.plugin())
+    implementation(libs.plugins.comGoogleDevtoolsKsp.plugin())
+    implementation(libs.orgJetbrainsKotlinx.kotlinxCoroutinesCore)
+    implementation(libs.orgJetbrainsKotlinx.kotlinxSerializationJson)
+    testImplementation(libs.junit.junit)
+}
+
+//GenerateBuildConfigTask.register(project)
