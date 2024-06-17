@@ -3,7 +3,7 @@ plugins {
     kotlin("android")
 //    id("maven-publish")
     id("com.google.devtools.ksp")
-    id("com.gitlab.7hens.ezgradle")
+    id("com.gitlab.7hens.ezgradle.project")
 }
 
 android {

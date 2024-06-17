@@ -19,7 +19,7 @@ import me.thens.ezgradle.util.isJava
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class EzGradlePlugin : Plugin<Project> {
+class EzGradleProjectPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val ezgradleProperties = EzGradleProperties.from(target)
         InternalLogger.update {

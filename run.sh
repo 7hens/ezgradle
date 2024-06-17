@@ -102,6 +102,7 @@ run_refresh() {
   ezgradle="$(grep 'version=' gradle.properties | cut -d '=' -f2)"
   sed -i'' -e "s/\\(ezgradle = \"\\).*/\\1$ezgradle\"/" $toml
   sed -i'' -e "s/\\(val ezgradle: String = \\).*/\\1\"$ezgradle\",/" $ezgradle_libs
+  sed -i'' -e "s/\\(val ezgradleVersion = \\).*/\\1\"$ezgradle\"/" settings.gradle.kts
 #  sed -i'' -e "s/\\(ezgradle\". version \\).*/\\1\"$ezgradle\"/" build.gradle.kts
   local android_min_sdk
   local android_target_sdk

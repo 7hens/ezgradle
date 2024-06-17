@@ -1,11 +1,15 @@
 import java.util.Properties
 
+
 pluginManagement {
 //    includeBuild("ezgradle-plugin")
     repositories {
         mavenLocal()
+        maven("https://jitpack.io/")
         maven("https://maven.aliyun.com/repository/public/")
         maven("https://maven.aliyun.com/repository/google/")
+        maven("https://maven.aliyun.com/repository/gradle-plugin/")
+        maven("https://maven.aliyun.com/repository/jcenter")
         google()
         mavenCentral()
         gradlePluginPortal()
@@ -13,12 +17,13 @@ pluginManagement {
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        mavenLocal()
-        maven("https://maven.aliyun.com/repository/public/")
-        maven("https://maven.aliyun.com/repository/google/")
-        google()
-        mavenCentral()
+    repositories.addAll(pluginManagement.repositories)
+}
+
+plugins {
+    if (System.getenv("EXCLUDES_SAMPLES") != "true") {
+        val ezgradleVersion = "2024.03.01-SNAPSHOT"
+        id("com.gitlab.7hens.ezgradle") version ezgradleVersion
     }
 }
 

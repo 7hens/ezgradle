@@ -1,5 +1,6 @@
 package me.thens.ezgradle.model
 
+import me.thens.ezgradle.EzGradleConstants
 import me.thens.ezgradle.util.getVersion
 import org.gradle.api.artifacts.VersionCatalog
 
