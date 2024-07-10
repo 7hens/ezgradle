@@ -22,7 +22,7 @@ dependencyResolutionManagement {
 
 plugins {
     if (System.getenv("EXCLUDES_SAMPLES") != "true") {
-        val ezgradleVersion = "2024.03.01-SNAPSHOT"
+        val ezgradleVersion = "2024.03.01.2-SNAPSHOT"
         id("com.gitlab.7hens.ezgradle") version ezgradleVersion
     }
 }
@@ -39,7 +39,7 @@ if (System.getenv("EXCLUDES_SAMPLES") != "true") {
     val moduleText = System.getenv("MODULES") ?: props.getProperty("modules") ?: ""
     val modules = moduleText.split(",").map { it.trim() }.toSet()
     val isPublish = gradle.startParameter.taskNames.any { it.contains(Regex("[Pp]ublish")) }
-    val containsAll = isPublish || modules.contains("*")
+    val containsAll = isPublish || modules.contains(".")
     (rootDir.listFiles() ?: emptyArray())
         .filter { File(it, "build.gradle.kts").exists() }
         .map { it.name }

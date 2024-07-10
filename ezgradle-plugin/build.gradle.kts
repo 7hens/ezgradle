@@ -1,3 +1,5 @@
+import org.w3c.dom.Element
+
 //import me.thens.ezgradle.util.GenerateBuildConfigTask
 
 plugins {
@@ -15,9 +17,29 @@ sourceSets {
 
 publishing {
     publications {
-        create<MavenPublication>("pluginMaven") {
+        create<MavenPublication>("settingsPlugin") {
             version = project.version.toString()
             from(components.getByName("java"))
+        }
+        create<MavenPublication>("projectPlugin") {
+            groupId = project.group.toString()
+            artifactId = "${project.name}.project"
+            version = project.version.toString()
+//            from(components.getByName("java"))
+            pom.withXml {
+                val root: Element = asElement()
+                val document = root.ownerDocument
+                val dependencies = root.appendChild(document.createElement("dependencies"))
+                val dependency = dependencies.appendChild(document.createElement("dependency"))
+                mapOf(
+                    "groupId" to groupId,
+                    "artifactId" to project.name,
+                    "version" to version,
+                    "scope" to "runtime",
+                ).forEach { (key, value) ->
+                    dependency.appendChild(document.createElement(key)).textContent = value
+                }
+            }
         }
     }
 }

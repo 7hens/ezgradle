@@ -40,7 +40,7 @@ drawablepainter = "0.32.0"
 dynamicanimation = "1.0.0"
 emoji2 = "1.4.0"
 exifinterface = "1.3.7"
-ezgradle = "2024.03.01-SNAPSHOT"
+ezgradle = "2024.03.01.2-SNAPSHOT"
 fastjson = "2.0.46"
 fastjson2 = "2.0.46"
 firebaseBom = "32.7.0"
@@ -317,7 +317,7 @@ androidxBenchmark = { id = "androidx.benchmark", version = "1.2.2" }
 comAndroidApplication = { id = "com.android.application", version.ref = "agp" }
 comAndroidLibrary = { id = "com.android.library", version.ref = "agp" }
 comGitlab7hensEzgradle = { id = "com.gitlab.7hens.ezgradle", version.ref = "ezgradle" }
-comGitlab7hensEzgradleProject = { id = "com.gitlab.7hens.ezgradle.project" }
+comGitlab7hensEzgradleProject = { id = "com.gitlab.7hens.ezgradle.project", version.ref = "ezgradle" }
 comGoogleAndroidLibrariesMapsplatformSecretsGradlePlugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version = "2.0.1" }
 comGoogleDaggerHiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 comGoogleDevtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

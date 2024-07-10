@@ -2,7 +2,8 @@
 
 plugins {
     if (System.getenv("EXCLUDES_SAMPLES") != "true") {
-        alias(libs.plugins.comGitlab7hensEzgradleProject)
+//        alias(libs.plugins.comGitlab7hensEzgradleProject)
+        id("com.gitlab.7hens.ezgradle.project")
     }
 }
 

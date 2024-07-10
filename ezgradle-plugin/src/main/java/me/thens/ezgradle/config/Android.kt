@@ -59,13 +59,13 @@ private fun Project.configureAndroidCommon(
     properties: EzGradleProperties
 ) {
     android.apply {
-        namespace = getDefaultPackageName()
-        compileSdk = properties.libs.versions.androidTargetSdk.toInt()
+        namespace = namespace ?: getDefaultPackageName()
+        compileSdk = compileSdk ?: properties.libs.versions.androidTargetSdk.toInt()
         defaultConfig {
-            minSdk = properties.libs.versions.androidMinSdk.toInt()
-            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+            minSdk = minSdk ?: properties.libs.versions.androidMinSdk.toInt()
+            testInstrumentationRunner = testInstrumentationRunner ?: "androidx.test.runner.AndroidJUnitRunner"
             vectorDrawables {
-                useSupportLibrary = true
+                useSupportLibrary = useSupportLibrary ?: true
             }
             BuildConfigGenerator(project).getProperties().entries.forEach { (key, value) ->
                 buildConfigField("String", key, "\"$value\"")
@@ -75,7 +75,6 @@ private fun Project.configureAndroidCommon(
 
         buildTypes {
             getByName("release") {
-                isMinifyEnabled = false
                 proguardFiles(
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
@@ -83,11 +82,10 @@ private fun Project.configureAndroidCommon(
             }
         }
         buildFeatures {
-            compose = false
-            buildConfig = true
+            buildConfig = buildConfig ?: true
         }
         composeOptions {
-            kotlinCompilerExtensionVersion = properties.libs.versions.composeCompiler
+            kotlinCompilerExtensionVersion = kotlinCompilerExtensionVersion ?: properties.libs.versions.composeCompiler
         }
         packaging {
             resources {

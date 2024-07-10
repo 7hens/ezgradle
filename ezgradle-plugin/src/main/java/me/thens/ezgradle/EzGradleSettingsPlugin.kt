@@ -5,11 +5,14 @@ import org.gradle.api.initialization.Settings
 import org.gradle.api.initialization.resolve.RepositoriesMode
 import org.gradle.kotlin.dsl.maven
 
+@Suppress("unused")
 class EzGradleSettingsPlugin : Plugin<Settings> {
     override fun apply(target: Settings) {
+        println("#>> apply plugin ezgradle settings")
         target.configure()
     }
 
+    @Suppress("UnstableApiUsage")
     private fun Settings.configure() {
         pluginManagement {
             repositories {
@@ -17,7 +20,6 @@ class EzGradleSettingsPlugin : Plugin<Settings> {
                 maven("https://maven.aliyun.com/repository/public/")
                 maven("https://maven.aliyun.com/repository/google/")
                 maven("https://maven.aliyun.com/repository/gradle-plugin/")
-//                maven("https://maven.aliyun.com/repository/jcenter")
                 maven("https://jitpack.io/")
                 google()
                 mavenCentral()
@@ -27,7 +29,7 @@ class EzGradleSettingsPlugin : Plugin<Settings> {
                 eachPlugin {
                     println("#>> plugin: ${requested.id}")
                     if (requested.id.toString() == EzGradleConstants.PROJECT_PLUGIN_ID) {
-                        useModule(EzGradleConstants.PLUGIN_COORDINATE)
+                        useModule(EzGradleConstants.PROJECT_PLUGIN_COORDINATE)
                     }
                 }
             }

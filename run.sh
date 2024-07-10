@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-PYTHON_VENV=pipenv
+#PYTHON_VENV=pipenv
+PYTHON_VENV=venv
 
 main() {
   set -e
@@ -24,25 +25,26 @@ run_py() {
 run_py_pipenv() {
   command -v pipenv >/dev/null || pip install --user pipenv
   pipenv install > /dev/null
-  pipenv run python "$@"
+  pipenv run python3 "$@"
 }
 
 run_py_venv() {
-    run_venv pip install -r requirements.txt > /dev/null
-    run_venv python "$@"
+    if [ -f requirements.txt ]; then
+        run_venv pip install -r requirements.txt > /dev/null
+    fi
+    run_venv python3 "$@"
 }
 
 run_venv() {
+    python3 -m venv .venv
     local cmd="$1"
     shift
-    local script
-    if x_is_win; then
+    local script=".venv/bin/$cmd"
+    if [[ ! -f "$script" ]]; then
         script=".venv/Scripts/$cmd"
-    else
-        script=".venv/bin/$cmd"
     fi
-    python -m venv .venv
-    chmod +x "$script"
+    echo test
+#    chmod +x "$script"
     "$script" "$@"
 }
 
@@ -57,7 +59,7 @@ run_pip_pipenv() {
 run_pip_venv() {
   run_venv pip "$@"
   if [ "$1" = install ]; then
-    run_ven pip feeze > requirements.txt
+    run_venv pip freeze > requirements.txt
   fi
 }
 
@@ -91,33 +93,33 @@ run_publish() {
 
 run_test_samples() {
   echo "Assemble samples"
-  MODULES='*' ./gradlew projects assemble -Pversion=-SNAPSHOT --stacktrace
+  MODULES='.' ./gradlew projects assemble -Pversion=-SNAPSHOT --stacktrace
   printf "Elapsed Time: %dm %ds\n" $((SECONDS / 60)) $((SECONDS % 60))
 }
 
 run_refresh() {
   local toml=gradle/libs.versions.toml
-  local ezgradle_libs=ezgradle-plugin/src/main/java/me/thens/ezgradle/model/EzGradleLibs.kt
+  local constants=ezgradle-plugin/src/main/java/me/thens/ezgradle/EzGradleConstants.kt
   local ezgradle
-  ezgradle="$(grep 'version=' gradle.properties | cut -d '=' -f2)"
-  sed -i'' -e "s/\\(ezgradle = \"\\).*/\\1$ezgradle\"/" $toml
-  sed -i'' -e "s/\\(val ezgradle: String = \\).*/\\1\"$ezgradle\",/" $ezgradle_libs
-  sed -i'' -e "s/\\(val ezgradleVersion = \\).*/\\1\"$ezgradle\"/" settings.gradle.kts
-#  sed -i'' -e "s/\\(ezgradle\". version \\).*/\\1\"$ezgradle\"/" build.gradle.kts
   local android_min_sdk
   local android_target_sdk
   local compose_compiler
+  ezgradle="$(grep 'version=' gradle.properties | cut -d '=' -f2)"
   android_min_sdk="$(grep 'androidMinSdk' $toml | head -1 | cut -d '=' -f2)"
   android_target_sdk="$(grep 'androidTargetSdk' $toml | head -1 | cut -d '=' -f2)"
   compose_compiler="$(grep 'composeCompiler' $toml | head -1 | cut -d '=' -f2)"
-  sed -i'' -e "s/\\(val androidMinSdk: String =\\).*/\\1$android_min_sdk,/" $ezgradle_libs
-  sed -i'' -e "s/\\(val androidTargetSdk: String =\\).*/\\1$android_target_sdk,/" $ezgradle_libs
-  sed -i'' -e "s/\\(val composeCompiler: String =\\).*/\\1$compose_compiler,/" $ezgradle_libs
+  sed -i'' -e "s/\\(ezgradle = \"\\).*/\\1$ezgradle\"/" $toml
+  sed -i'' -e "s/\\(val ezgradleVersion = \\).*/\\1\"$ezgradle\"/" settings.gradle.kts
+#  sed -i'' -e "s/\\(ezgradle\". version \\).*/\\1\"$ezgradle\"/" build.gradle.kts
+  sed -i'' -e "s/\\(val VERSION = \\).*/\\1\"$ezgradle\"/" "$constants"
+  sed -i'' -e "s/\\(val ANDROID_MIN_SDK =\\).*/\\1$android_min_sdk/" "$constants"
+  sed -i'' -e "s/\\(val ANDROID_TARGET_SDK =\\).*/\\1$android_target_sdk/" "$constants"
+  sed -i'' -e "s/\\(val COMPOSE_COMPILER =\\).*/\\1$compose_compiler/" "$constants"
   main update_bom
 }
 
 gradle_has_task() {
-  if MODULES='*' ./gradlew "$1" -m >/dev/null 2>/dev/null; then
+  if MODULES='.' ./gradlew "$1" -m >/dev/null 2>/dev/null; then
     echo 1
   else
     echo 0

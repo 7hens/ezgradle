@@ -16,17 +16,24 @@ import me.thens.ezgradle.log.log
 import me.thens.ezgradle.model.EzGradleProperties
 import me.thens.ezgradle.util.isAndroid
 import me.thens.ezgradle.util.isJava
+import me.thens.ezgradle.util.isRoot
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
+@Suppress("unused")
 class EzGradleProjectPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val ezgradleProperties = EzGradleProperties.from(target)
-        InternalLogger.update {
-            copy(printer = printer.filter(LogFilter.minLevel(ezgradleProperties.logLevel)))
+        if (!target.isRoot) {
+            return
         }
-        log.debug { ezgradleProperties.toString() }
-        target.configure(ezgradleProperties)
+        target.gradle.afterProject {
+            val ezgradleProperties = EzGradleProperties.from(project)
+            InternalLogger.update {
+                copy(printer = printer.filter(LogFilter.minLevel(ezgradleProperties.logLevel)))
+            }
+            log.debug { ezgradleProperties.toString() }
+            configure(ezgradleProperties)
+        }
     }
 
     private fun Project.configure(properties: EzGradleProperties) {
