@@ -22,8 +22,8 @@ publishing {
             from(components.getByName("java"))
         }
         create<MavenPublication>("projectPlugin") {
-            groupId = project.group.toString()
-            artifactId = "${project.name}.project"
+            groupId = "${project.group}.project"
+            artifactId = "$groupId.gradle.plugin"
             version = project.version.toString()
 //            from(components.getByName("java"))
             pom.withXml {
@@ -32,7 +32,7 @@ publishing {
                 val dependencies = root.appendChild(document.createElement("dependencies"))
                 val dependency = dependencies.appendChild(document.createElement("dependency"))
                 mapOf(
-                    "groupId" to groupId,
+                    "groupId" to "${project.group}",
                     "artifactId" to project.name,
                     "version" to version,
                     "scope" to "runtime",
