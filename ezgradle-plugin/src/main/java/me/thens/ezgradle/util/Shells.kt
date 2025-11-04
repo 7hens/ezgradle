@@ -9,7 +9,7 @@ fun Project.shell(command: String): String {
         .redirectErrorStream(true)
         .apply { environment().putAll(System.getenv()) }
         .start()
-    val separator = System.getProperty("line.separator")
+    val separator = System.lineSeparator()
     return process.inputReader().lineSequence()
         .onEach { println(it) }
         .joinToString(separator)

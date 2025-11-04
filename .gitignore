@@ -11,3 +11,4 @@ __local/
 local.properties
 .venv/
 .vscode/
+__pycache__/
